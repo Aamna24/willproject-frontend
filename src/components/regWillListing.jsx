@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { CButton, CDataTable } from "@coreui/react";
 import * as auth from "../services/authService";
-
+import { toast } from "react-toastify";
+toast.configure();
 const RegWillListing = () => {
   const user = auth.getCurrentUser();
   const match = user.email;
@@ -24,6 +25,9 @@ const RegWillListing = () => {
 
   if (!willList || willList.length === 0) return <p>Cannot find any posts</p>;
   const newWillList = willList.data.filter((x) => x.willOwnerEmail === match);
+  if (newWillList == null) {
+    toast.error("No Will registered");
+  }
   if (!newWillList || newWillList.length === 0)
     return <p>Cannot find any posts</p>;
   const arr = [];

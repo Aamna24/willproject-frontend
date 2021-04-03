@@ -18,7 +18,7 @@ const RegDocument = () => {
 
   const handleSubmit = async () => {
     try {
-      await auth.regDocument(
+      const response = await auth.regDocument(
         docName,
         docType,
         docDate,
@@ -27,6 +27,7 @@ const RegDocument = () => {
         docLoc,
         activeWillId
       );
+      window.location.href = "/listregisteredDoc/?rd=" + id;
     } catch (error) {}
   };
 

@@ -7,12 +7,7 @@ class LandingPage extends Component {
   render() {
     return (
       <div className="container" style={{ marginTop: "100px" }}>
-        <Button
-          color="primary"
-          variant="contained"
-          component={Link}
-          to="/searchform"
-        >
+        <Button color="primary" variant="contained" component={Link} to="/test">
           Basic Search
         </Button>
       </div>

@@ -2,6 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import auth from "../services/adminService";
 import Form from "react-bootstrap/Form";
+import { toast } from "react-toastify";
+toast.configure();
 
 const FlyerForm = () => {
   const [name, setName] = React.useState();
@@ -16,7 +18,7 @@ const FlyerForm = () => {
     data.append("description", description);
 
     const response = await auth.uploadFlyer(data);
-    console.log(response);
+    toast.success("Flyer uploaded successfully");
   };
 
   return (

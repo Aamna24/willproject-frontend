@@ -25,6 +25,7 @@ import SetupDiscount from './components/setupDiscount';
 import Details from './common/willDetail';
 import listRegDoc from './components/registeredDocuments/listRegDoc'
 import EditDoc from './components/registeredDocuments/editDocument';
+import SearchForm from './components/testCom';
 
 class App extends React.Component {
   state = {  }
@@ -80,7 +81,7 @@ class App extends React.Component {
        
         <Route path="/register/orgaisationalUsers" component={RegisterOrgUser}/>
 
-        <Route path="/test" component={TableSectionInbound}/>
+        <Route path="/test" component={SearchForm}/>
         <Redirect from="/" exact to="/home" />
 
         
