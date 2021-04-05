@@ -18,3 +18,9 @@ img {
 td#pBold {
   font-weight: 500;
 }
+span.MuiButton-label:hover {
+  color: white;
+}
+a:hover {
+  color: white;
+}

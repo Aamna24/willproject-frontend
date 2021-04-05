@@ -37,7 +37,6 @@ const RegWillListing = () => {
 
   const fields = [
     { key: "dateCreated" },
-    "dateOfWill",
     "willOwnerTitle",
     { key: "willOwnerFname", label: "First Name" },
     { key: "willOwnerMname", label: "Middle Name" },

@@ -18,7 +18,7 @@ import WillAHomePage from './components/WillAmbHome';
 import FlyerListing from './components/flyerListing';
 import CommissionListing from './components/comListing';
 import BalanceRequest from './components/balanceReq';
-import TableSectionInbound from './components/testCom'
+
 import RegWillListing from './components/regWillListing';
 import RegDocument from './components/registeredDocuments/regDocument';
 import SetupDiscount from './components/setupDiscount';
@@ -26,6 +26,8 @@ import Details from './common/willDetail';
 import listRegDoc from './components/registeredDocuments/listRegDoc'
 import EditDoc from './components/registeredDocuments/editDocument';
 import SearchForm from './components/testCom';
+
+import MultiStepForm from './components/willRegForm.jsx/MultiStepForm'
 
 class App extends React.Component {
   state = {  }
@@ -67,6 +69,8 @@ class App extends React.Component {
         <Route path="/listregisteredDoc" component={listRegDoc}/>
         <Route path="/registerdocument" component={RegDocument}/>
         <Route path="/edit" component={EditDoc}/>
+       
+        <Route path="/form" render={props => <MultiStepForm user={user} {...props}/>}/>
         
 
         <Route path="/commission-listing" component={CommissionListing}/>

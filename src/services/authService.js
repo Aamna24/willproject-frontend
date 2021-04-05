@@ -68,6 +68,13 @@ export function getEachDocDetails(id){
     const eachdetail = "/will/documentdetails/"+id
     return http.get(eachdetail)
 }
+
+// register basic will
+// get each registered document
+export function registerBasicWill(data,id){
+    const will = "/will/willregisteration/"+id
+              return http.post(will,data)
+}
 export function logout(){
     localStorage.removeItem(tokenKey);
 }
@@ -91,5 +98,6 @@ export default{
     registerWillAmbassdor,
     getDetails,
     getRegDoc,
-    getWill
+    getWill,
+    registerBasicWill
 }

@@ -117,11 +117,14 @@ const Details = () => {
 
       <br />
       <br />
+      <h4 className="text-center">Additional Details</h4>
+      <br />
+      <br />
       <table className="table">
         <tbody>
           <tr>
             <td id="pBold">Date of Will</td>
-            <td>{details.data.dateOfWill}</td>
+            <td>{details.data.dateCreated}</td>
             <td id="pBold">Address where will is stored</td>
             <td>{details.data.storedWillAdd}</td>
             <td id="pBold">Additional Instructions</td>
