@@ -24,3 +24,6 @@ span.MuiButton-label:hover {
 a:hover {
   color: white;
 }
+a.MuiButton-containedPrimary:hover {
+  color: white;
+}

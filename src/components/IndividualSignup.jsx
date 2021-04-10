@@ -12,6 +12,7 @@ const IndividualSignup = () => {
   const [add2, setAdd2] = React.useState();
   const [town, setTown] = React.useState();
   const [country, setCountry] = React.useState();
+  const [name, setName] = React.useState();
 
   const handleSubmit = async () => {
     console.log(selfie);
@@ -25,7 +26,7 @@ const IndividualSignup = () => {
     data.append("phoneNo", phoneNo);
     data.append("town", town);
     data.append("country", country);
-
+    data.append("name", name);
     const response = await auth.register(data);
     console.log(response);
   };
@@ -33,6 +34,17 @@ const IndividualSignup = () => {
   return (
     <div className="container col-md-6">
       <Form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input
+            type="name"
+            class="form-control"
+            name="name"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Email</label>
           <input

@@ -20,9 +20,11 @@ class Login extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      await auth.login(data.username, data.password);
+      const response = await auth.login(data.username, data.password);
+      console.log("res", response);
       window.location = "/";
       toast.success("Successful Login");
+      return response;
     } catch (ex) {
       if (ex.response && ex.respone.status === 404) {
         const errors = { ...this.state.errors };

@@ -26,7 +26,6 @@ class Form extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("handle");
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
@@ -41,6 +40,13 @@ class Form extends Component {
     else delete errors[input.name];
 
     const data = { ...this.state.data };
+    if (input.name === "type") {
+      if (input.value === "Employee Voucher") {
+        data["showFields"] = true;
+      } else {
+        data["showFields"] = false;
+      }
+    }
     data[input.name] = input.value;
     this.setState({ data, errors });
   };

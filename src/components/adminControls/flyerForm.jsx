@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import auth from "../services/adminService";
+import auth from "../../services/adminService";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
 toast.configure();
@@ -9,6 +9,7 @@ const FlyerForm = () => {
   const [name, setName] = React.useState();
   const [description, setDescription] = React.useState();
   const [image, setImg] = React.useState();
+  const [type, setType] = React.useState();
 
   const handleSubmit = async () => {
     console.log(image);
@@ -16,9 +17,13 @@ const FlyerForm = () => {
     data.append("img", image);
     data.append("name", name);
     data.append("description", description);
+    data.append("type", type);
 
     const response = await auth.uploadFlyer(data);
-    toast.success("Flyer uploaded successfully");
+    //toast.success("Flyer uploaded successfully");
+    if (response.status === 201) {
+      window.location.href = "/admin/flyer";
+    }
   };
 
   return (
@@ -58,6 +63,22 @@ const FlyerForm = () => {
               setDescription(e.target.value);
             }}
           />
+        </div>
+        <div class="form-group">
+          <label>Flyer Type</label>
+          <select
+            for="exampleInputEmail1"
+            name="type"
+            class="form-control"
+            id="exampleInputEmail1"
+            onChange={(e) => {
+              setType(e.target.value);
+            }}
+          >
+            <option>[Please select one]</option>
+            <option>B2B / Employee Voucher</option>
+            <option>Individual</option>
+          </select>
         </div>
         <div>
           <Button variant="contained" color="primary" onClick={handleSubmit}>

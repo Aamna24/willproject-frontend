@@ -23,7 +23,7 @@ class AdminMainPage extends Component {
             color="primary"
             variant="contained"
             component={Link}
-            to="/admin/create-flyer"
+            to="/admin/flyer"
           >
             Manage PDF Flyer
           </Button>
@@ -45,7 +45,7 @@ class AdminMainPage extends Component {
             color="primary"
             variant="contained"
             component={Link}
-            to="/admin/balance-request"
+            to="/admin/manageusers"
           >
             Manage B2B/Ambassador Account
           </Button>
@@ -60,6 +60,17 @@ class AdminMainPage extends Component {
             to="/admin/setup-discount"
           >
             Setup Discount
+          </Button>
+        </div>
+        <br />
+        <div className="row">
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/admin/create-invoice"
+          >
+            Generate B2B Employee Voucher Invoice
           </Button>
         </div>
       </div>

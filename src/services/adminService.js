@@ -4,30 +4,45 @@ import jwtDecode from 'jwt-decode'
 
 const apiPoint = "/users/login/"
 const tokenKey = "token"
-const apiEndPoint1 = "/flyer/uploadFlyer/"
 
 export async function adminlogin(email, password) {
     const {data: jwt} = await http.post(apiPoint, { email, password })
     localStorage.setItem(tokenKey, jwt.token);
 }
 
-const apiEndPoint = "/users/register/organisationUser"
+
 export function registerOrgUser(data) {
-    return http.post(apiEndPoint,data);
+    return http.post("/users/register/organisationUser",data);
   }
 
 export function uploadFlyer(data){
-  console.log("upload",data)
-  return http.post(apiEndPoint1,data);
-}
-
-const discountEndPoint = "/users/setup-discount"
-export async function setupDiscount(type, fromNoQty, toNoQty, discountPercentage){
-  return await http.post(discountEndPoint,{type, fromNoQty, toNoQty, discountPercentage});
+  return http.post("/flyer/uploadFlyer/",data);
 }
 
 
+export async function setupDiscount(type, fromNoQty, toNoQty, discountPercentage,commissionPercentage){
 
+  return await http.post("/users/setup-discount",{type, fromNoQty, toNoQty, discountPercentage,commissionPercentage});
+}
+
+// get discounts list
+export async function getDiscounts(){
+  return await http.get("/users/discounts");
+}
+// get list of users
+export function getUsersList(){
+  return http.get("/users/")
+}
+
+// get list of flyers
+export function getFlyers(){
+  return http.get("/flyer/")
+}
+
+// remove flyer
+export function removeFlyer(id){
+  return http.delete("/flyer/delete/"+id)
+}
 export function getCurrentUser(){
     try {
         const jwt = localStorage.getItem(tokenKey);
@@ -39,14 +54,31 @@ export function getCurrentUser(){
       }
 }
 
-
-
+// generate invoice link
+export function generateInvoice(b2bClient,noOfVoucher,amount,processedBy){
+  return http.post("/users/generate-invoice",{b2bClient,noOfVoucher,amount,processedBy})
+}
+// get invoice
+export function getInvoice(){
+  return http.get("/users/invoice")
+}
+// change invoice status
+export function updateInvoice(id,paymentID){
+  return http.patch("/users/invoice/"+id,{paymentID})
+}
 export default{
     adminlogin,
     getCurrentUser,
     registerOrgUser,
     uploadFlyer,
-    setupDiscount
+    setupDiscount,
+    getUsersList,
+    getDiscounts,
+    generateInvoice,
+    getInvoice,
+    updateInvoice,
+    getFlyers,
+    removeFlyer
     
    
 }

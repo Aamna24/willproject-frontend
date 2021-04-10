@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import jwtDecode from 'jwt-decode'
 
-const apiPoint = "/users/login/"
+const apiPoint = "/users/login"
 const tokenKey = "token"
 
 // login user
@@ -20,12 +20,13 @@ export async function getWill(){
     return http.get(url)
 }
 // register document against will 
-export async function regDocument(docName, docType,docDate,docNo,docLoc,docDesc,activeWillId) {
+export async function regDocument(docName, docType,docDate,docNo,docLoc,docDesc,activeWillId,issuer) {
     const regEndPoint = "/users/register-document"
-    return http.post(regEndPoint, { docName, docType,docDate,docNo,docLoc,docDesc,activeWillId});
+    return http.post(regEndPoint, { docName, docType,docDate,docNo,docLoc,docDesc,activeWillId,issuer});
     
     
 }
+
 
 // register individual user
 export function register(data) {
@@ -45,6 +46,16 @@ export function registerWillAmbassdor(data) {
     return http.post(apiEndPoint2, data);
 }
 
+//generate vouchers
+export function generateVoucher(userID, discountID, paymentNumber,quantity){
+    const voucher = "/users/vouchers"
+    return http.post(voucher,{userID, discountID, paymentNumber,quantity})
+}
+
+//get detail of eacg voucher
+export function getVoucherDetail(id){
+    return http.get("/users/voucherdetail/"+id)
+}
 // get details of each will
 export function getDetails(id){
     const detailsEndPoint = "/will/details/"+id
@@ -79,6 +90,16 @@ export function logout(){
     localStorage.removeItem(tokenKey);
 }
 
+// get vouchers list
+export function getVouchersList(){
+    const v = "/users/voucherslist"
+    return http.get(v)
+}
+// get products list
+export function getProducts(){
+    const v = "/users/products"
+    return http.get(v)
+}
 export function getCurrentUser(){
     try {
         const jwt = localStorage.getItem(tokenKey);
@@ -99,5 +120,10 @@ export default{
     getDetails,
     getRegDoc,
     getWill,
-    registerBasicWill
+    registerBasicWill,
+    generateVoucher,
+    getVouchersList,
+    getProducts,
+    getVoucherDetail
+  
 }

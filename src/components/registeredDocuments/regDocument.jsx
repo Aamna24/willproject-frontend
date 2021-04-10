@@ -14,6 +14,8 @@ const RegDocument = () => {
   const [docNo, setDocNo] = React.useState();
   const [docDesc, setDocDesc] = React.useState();
   const [docLoc, setDocLoc] = React.useState();
+  const [issuer, setIssuer] = React.useState();
+
   const activeWillId = id;
 
   const handleSubmit = async () => {
@@ -25,7 +27,8 @@ const RegDocument = () => {
         docNo,
         docDesc,
         docLoc,
-        activeWillId
+        activeWillId,
+        issuer
       );
       window.location.href = "/listregisteredDoc/?rd=" + id;
     } catch (error) {}
@@ -82,6 +85,20 @@ const RegDocument = () => {
               placeholder=""
               onChange={(e) => {
                 setDocNo(e.target.value);
+              }}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col=md-6  ">
+            <label>Register Document Issuer</label>
+          </div>
+          <div className="col-md-6">
+            <input
+              type="text"
+              placeholder=""
+              onChange={(e) => {
+                setIssuer(e.target.value);
               }}
             />
           </div>

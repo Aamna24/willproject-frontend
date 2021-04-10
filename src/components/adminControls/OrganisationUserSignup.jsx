@@ -1,8 +1,9 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import auth from "../services/authService";
+import auth from "../../services/adminService";
 import Form from "react-bootstrap/Form";
-
+import { toast } from "react-toastify";
+toast.configure();
 const RegOrgUser = () => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
@@ -12,6 +13,7 @@ const RegOrgUser = () => {
   const [add2, setAdd2] = React.useState();
   const [town, setTown] = React.useState();
   const [country, setCountry] = React.useState();
+  const [name, setName] = React.useState();
 
   const handleSubmit = async () => {
     console.log(selfie);
@@ -25,14 +27,27 @@ const RegOrgUser = () => {
     data.append("phoneNo", phoneNo);
     data.append("town", town);
     data.append("country", country);
-
+    data.append("name", name);
     const response = await auth.registerOrgUser(data);
-    console.log(response);
+    if (response.status === 201) {
+      toast.success("User successfully registered");
+    }
   };
 
   return (
     <div className="container col-md-6">
       <Form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input
+            type="name"
+            class="form-control"
+            name="name"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Email</label>
           <input
@@ -46,7 +61,7 @@ const RegOrgUser = () => {
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Password</label>
-          <textarea
+          <input
             type="password"
             class="form-control"
             name="password"

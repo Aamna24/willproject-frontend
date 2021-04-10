@@ -48,6 +48,7 @@ const RegisteredDoc = () => {
     { key: "docNo", label: "Document Number" },
     { key: "docDesc", label: "Document Description" },
     { key: "docLoc", label: "Document Location" },
+    { key: "issuer", label: "Document Issuer" },
 
     {
       key: "create_new",
@@ -153,10 +154,7 @@ const RegisteredDoc = () => {
                 <p>Document Number: {item.docNo}</p>
                 <p>Document Description: {item.docDesc}</p>
                 <p>Document Location: {item.docLoc}</p>
-
-                <CButton size="sm" color="danger" className="ml-1">
-                  Delete
-                </CButton>
+                <p>Document Issuer: {item.issuer}</p>
               </CCardBody>
             </CCollapse>
           );

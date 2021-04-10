@@ -11,9 +11,9 @@ import Logout from './components/logout'
 import RegisterB2B from './components/B2BSignup';
 import RegisterWillAmbassador from './components/WillAmbSignup'
 import AdminLogin from './components/adminLogin';
-import RegisterOrgUser from './components/OrganisationUserSignup';
+import RegisterOrgUser from './components/adminControls/OrganisationUserSignup';
 import AdminMainPage from './components/adminPage';
-import FlyerForm from './components/flyerForm';
+import FlyerForm from './components/adminControls/flyerForm';
 import WillAHomePage from './components/WillAmbHome';
 import FlyerListing from './components/flyerListing';
 import CommissionListing from './components/comListing';
@@ -21,13 +21,21 @@ import BalanceRequest from './components/balanceReq';
 
 import RegWillListing from './components/regWillListing';
 import RegDocument from './components/registeredDocuments/regDocument';
-import SetupDiscount from './components/setupDiscount';
+import SetupDiscount from './components/adminControls/setupDiscount';
 import Details from './common/willDetail';
 import listRegDoc from './components/registeredDocuments/listRegDoc'
 import EditDoc from './components/registeredDocuments/editDocument';
-import SearchForm from './components/testCom';
+import SearchForm from './components/basicSearch';
 
 import MultiStepForm from './components/willRegForm.jsx/MultiStepForm'
+import ManageUsers from './components/adminControls/manageUsers';
+import EmployeeVoucherPopPage from './components/EmpVouPopPage';
+import VoucherListing from './components/VoucherListing';
+import EmployeeVoucherInvoiceCreation from './components/adminControls/invoiceCreation';
+import InvoiceListing from './components/adminControls/invoiceListing';
+import Payment from './components/adminControls/paymentID';
+import Flyer from './components/adminControls/flyer';
+import VoucherDetails from './components/voucherDetails';
 
 class App extends React.Component {
   state = {  }
@@ -61,8 +69,13 @@ class App extends React.Component {
         <Route path="/admin/login" component={AdminLogin}/>
         <Route path="/adminhome" component={AdminMainPage}/>
         <Route path="/admin/create-flyer" component={FlyerForm}/>
+        <Route path="/admin/flyer" component={Flyer}/>
         <Route path="/admin/balance-request" component={BalanceRequest}/>
         <Route path="/admin/setup-discount" component={SetupDiscount}/>
+        <Route path="/admin/manageusers" component={ManageUsers}/>
+        <Route path="/admin/create-invoice" component={EmployeeVoucherInvoiceCreation}/>
+        <Route path="/admin/invoice-listing" component={InvoiceListing}/>
+        <Route path="/invoice" component={Payment}/>
 
         <Route path="/will-listing" component={RegWillListing}/>
         <Route path="/details" component={Details}/>
@@ -85,7 +98,11 @@ class App extends React.Component {
        
         <Route path="/register/orgaisationalUsers" component={RegisterOrgUser}/>
 
-        <Route path="/test" component={SearchForm}/>
+        <Route path="/search" component={SearchForm}/>
+        
+        <Route path="/voucherlisting" component={VoucherListing}/>
+        <Route path="/voucherdetail" component={VoucherDetails}/>
+        <Route path="/voucherpage" component={EmployeeVoucherPopPage}/>
         <Redirect from="/" exact to="/home" />
 
         
