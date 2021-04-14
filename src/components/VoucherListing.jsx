@@ -64,7 +64,12 @@ const VoucherListing = () => {
 
   return (
     <div className="container">
-      <Button variant="contained" color="primary" component={Link} to="/test">
+      <Button
+        variant="contained"
+        color="primary"
+        component={Link}
+        to="/voucherpage"
+      >
         Generate Voucher
       </Button>
       <br />

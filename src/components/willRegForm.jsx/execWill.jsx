@@ -38,7 +38,7 @@ const ExecWillForm = () => {
   };
   const handlePaystackSuccessAction = async (response) => {
     // Implementation for whatever you want to do with email and after success call.
-    console.log(response);
+
     if (response.status === "success") {
       const userID = "";
       const userName = "";

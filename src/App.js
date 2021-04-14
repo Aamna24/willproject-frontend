@@ -44,6 +44,7 @@ import PaymentPage from './components/willRegForm.jsx/payment';
 import Checkout from './components/willRegForm.jsx/payment';
 import ProbateWillForm from './components/willRegForm.jsx/probateReg';
 import OrgUserHomePage from './components/orgUserHome';
+import B2BHome from './components/b2bHome';
 
 class App extends React.Component {
   state = {  }
@@ -113,6 +114,7 @@ class App extends React.Component {
         <Route path="/voucherlisting" component={VoucherListing}/>
         <Route path="/voucherdetail" component={VoucherDetails}/>
         <Route path="/voucherpage" component={EmployeeVoucherPopPage}/>
+        <Route path="/b2bhome" component={B2BHome}/>
 
         <Route path="/execform" component={ExecWillForm}/>
         <Route path="/probateform" component={ProbateWillForm}/>

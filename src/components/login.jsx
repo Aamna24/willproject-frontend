@@ -28,6 +28,8 @@ class Login extends Form {
         window.location.href = "/will-ambassador/home";
       } else if (response.data[0].type === "organisationUser") {
         window.location.href = "/orguserhome";
+      } else if (response.data[0].type === "B2B") {
+        window.location.href = "/b2bhome";
       }
 
       toast.success("Successful Login");

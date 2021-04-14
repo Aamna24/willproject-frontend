@@ -111,6 +111,11 @@ export function execWillUpdate(id,discountApplied, amountPaid){
     return http.patch("/will/updateexecwill/"+id,{discountApplied, amountPaid})
 }
 
+// generate balance req
+export function generateBalanceReq(userName, bankName , bankAccountName, commissionBalance, bankAccNo){
+    return http.post("/users/generate-balancereq/",{userName, bankName , bankAccountName, commissionBalance, bankAccNo})
+}
+
 // probate will req
 export function probForm(data){
     return http.post("/will/probateregistry",data)
@@ -171,6 +176,7 @@ export default{
     execWillUpdate,
     probForm,
     probWillUpdate,
-    searchForm
+    searchForm,
+    generateBalanceReq
   
 }

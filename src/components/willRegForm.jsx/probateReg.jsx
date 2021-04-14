@@ -36,6 +36,7 @@ const ProbateWillForm = () => {
     currency: "ZAR",
     publicKey: "pk_test_6ad7daa084d40f22350038852006a020e49a4428",
   };
+
   const handlePaystackSuccessAction = async (response) => {
     // Implementation for whatever you want to do with email and after success call.
     console.log(response);
