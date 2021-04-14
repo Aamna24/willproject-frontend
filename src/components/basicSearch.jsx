@@ -1,17 +1,199 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
+import * as auth from "../services/authService";
+import * as admin from "../services/adminService";
+import { toast } from "react-toastify";
+import { PaystackButton } from "react-paystack";
+
+toast.configure();
+
 const SearchForm = () => {
   const [regNo, setRegNo] = React.useState();
+  const [willOwnerName, setWillOwnerName] = React.useState();
+  const [willOwnerPh, setWillOwnerPh] = React.useState();
+  const [willOwnerDob, setWillOwnerDob] = React.useState();
+  const [relationship, setRelationship] = React.useState();
+  const [reasons, setReasons] = React.useState();
+  const [reqTitle, setReqTitle] = React.useState();
+  const [reqFname, setReqFname] = React.useState();
+  const [reqMname, setReqMname] = React.useState();
+  const [reqLname, setReqLname] = React.useState();
+  const [reqAdd, setReqAdd] = React.useState();
+  const [reqPhNo, setReqPhNo] = React.useState();
+  const [reqEmail, setReqEmail] = React.useState();
+  const [reqAddLine1, setReqAddLine1] = React.useState();
+  const [reqAddLine2, setReqAddLine2] = React.useState();
+  const [town, setTown] = React.useState();
+  const [country, setCountry] = React.useState();
+  const [reqPostCode, setReqPostcode] = React.useState();
+  const [promoCode, setPromoCode] = React.useState();
+  const [selfie, setSelfie] = React.useState();
+  const [user, setUser] = useState([]);
+  const [price, setPrice] = useState([]);
+  const [discount, setDiscount] = useState([]);
 
+  const [commissionEarned, setCommissionEarned] = useState();
+  const [commissionBalance, setCommissionBalance] = useState();
+  const [amount, setAmount] = useState();
+  const [show, setShow] = useState();
   const [showFields, setShowField] = React.useState(null);
+
+  // get base price of product
+  const getBasePrice = () => {
+    auth
+      .getProducts()
+      .then((res) => {
+        setPrice(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return price;
+  };
+
+  React.useEffect(getBasePrice, []);
+  // get discount
+  const getDiscount = () => {
+    admin
+      .getDiscounts()
+      .then((res) => {
+        setDiscount(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return discount;
+  };
+  //getData();
+  React.useEffect(getDiscount, []);
+  // get user data
+  const getData = () => {
+    admin
+      .getUsersList()
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return user;
+  };
+  //getData();
+  React.useEffect(getData, []);
+
+  if (!user || user.length === 0) return <p></p>;
+  if (!discount || discount.length === 0) return <p></p>;
+  if (!price || price.length === 0) return <p></p>;
+  //base price
+  const product = price.data.filter((x) => x.name === "search");
+  const willPrice = product[0].basePrice;
+
+  //check ambassador code matches or not
+  const filtercode = user.data.filter((x) => x.code === promoCode);
+  var discountdetail = [];
+  if (filtercode[0].type === "willAmbassador") {
+    discountdetail = discount.data.filter((x) => x.type === "Will Ambassador");
+  } else {
+    discountdetail = discount.data.filter(
+      (x) => x.type === "Organisation User B2B Discount"
+    );
+  }
   const handleChange = (e) => {
     if (e.target.value === "Yes") {
       setShowField(e.target.value);
     } else {
       setShowField(null);
     }
+  };
+  const config = {
+    reference: new Date().getTime(),
+    email: reqEmail,
+    amount: amount,
+    currency: "ZAR",
+    publicKey: "pk_test_6ad7daa084d40f22350038852006a020e49a4428",
+  };
 
-    console.log("show", showFields);
+  const handlePaystackSuccessAction = async (response) => {
+    // Implementation for whatever you want to do with email and after success call.
+
+    if (response.status === "success") {
+      const userID = "";
+      const userName = "";
+      const willAmbID = filtercode[0]._id;
+      const productName = product[0].name;
+      const res = await admin.addCommission(
+        userID,
+        willAmbID,
+        commissionEarned,
+        commissionBalance,
+        productName,
+        userName
+      );
+      const discountCode = discountdetail[0].discountCode;
+      const discountApplied = discountdetail[0].discountPercentage;
+      const amountPaid = amount;
+      const id = regNo;
+      //await auth.execWillUpdate(id, discountApplied, amountPaid);
+    }
+  };
+  // you can call this function anything
+  const handlePaystackCloseAction = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+  const componentProps = {
+    ...config,
+    text: "Payment",
+    onSuccess: (email) => handlePaystackSuccessAction(email),
+    onClose: handlePaystackCloseAction,
+  };
+  const handleSubmit = async () => {
+    const data = new FormData();
+
+    data.append("willRegNo", regNo);
+    data.append("nameOfWillOwner", willOwnerName);
+    data.append("willOwnerPh", willOwnerPh);
+    data.append("willOwnerDob", willOwnerDob);
+    data.append("reqTitle", reqTitle);
+    data.append("reqFname", reqFname);
+    data.append("reqMname", reqMname);
+    data.append("reqLname", reqLname);
+    data.append("reqAdd", reqAdd);
+    data.append("reqAddLine1", reqAddLine1);
+    data.append("reqAddLine2", reqAddLine2);
+    data.append("reqEmail", reqEmail);
+    data.append("reqTown", town);
+    data.append("reqCountry", country);
+    data.append("reqPhNo", reqPhNo);
+    data.append("reqPostCode", reqPostCode);
+    data.append("relationship", relationship);
+    data.append("reasons", reasons);
+    data.append("promotionCode", promoCode);
+    data.append("reqSelfie", selfie);
+    const res = await auth.searchForm(data);
+    if (res.status === 201) {
+      toast.success("Will Owner will be notified of Your Search");
+    }
+  };
+
+  const calculateAmount = () => {
+    setShow(true);
+
+    // calculate discounted price after promotion
+    const d = willPrice * (discountdetail[0].discountPercentage / 100);
+    const discountedPrice = willPrice - d;
+    setAmount(discountedPrice);
+
+    // calculate comission earned
+    // const com = willPrice * (discountdetail[0].commissionPercentage / 100);
+    const com = discountdetail[0].commissionPercentage;
+    setCommissionEarned(com);
+
+    // set commisision balance
+    // const comBal = willPrice - com;
+    const commB = willPrice * (discountdetail[0].commissionPercentage / 100);
+    const comBal = willPrice - commB;
+    setCommissionBalance(comBal);
   };
   return (
     <div className="container">
@@ -35,149 +217,273 @@ const SearchForm = () => {
             <label>Will Registeration Number</label>
           </div>
 
-          <input name="registerationNo" />
+          <input
+            name="regNo"
+            onChange={(e) => {
+              setRegNo(e.target.value);
+            }}
+          />
+          <br />
         </div>
       )}
-      <br />
+
       {!showFields && (
         <div>
           <div className="row">
             <div className="col-md-6">
               <label>Name of Will Owner</label>
             </div>
-            <input />
+            <input
+              name="willOwnerName"
+              onChange={(e) => {
+                setWillOwnerName(e.target.value);
+              }}
+            />
           </div>
+          <br />
           <div className="row">
             <div className="col-md-6">
               <label>Phone of Will Owner</label>
             </div>
-            <input />
+            <input
+              name="willOwnerPh"
+              onChange={(e) => {
+                setWillOwnerPh(e.target.value);
+              }}
+            />
           </div>
+          <br />
           <div className="row">
             <div className="col-md-6">
               <label>DOB of Will Owner</label>
             </div>
-            <input />
+            <input
+              name="willOwnerDob"
+              type="date"
+              onChange={(e) => {
+                setWillOwnerDob(e.target.value);
+              }}
+            />
           </div>
+          <br />
         </div>
       )}
-
+      <br />
       <div className="row">
         <div className="col-md-6">
           <label>Relationship with Will Owner</label>
         </div>
-        <input />
+        <input
+          name="relationship"
+          onChange={(e) => {
+            setRelationship(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Reasons for Search</label>
         </div>
-        <input />
+        <input
+          name="reasons"
+          onChange={(e) => {
+            setReasons(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Title</label>
         </div>
-        <input />
+        <input
+          name="reqTitle"
+          onChange={(e) => {
+            setReqTitle(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester First Name</label>
         </div>
-        <input />
+        <input
+          name="reqFname"
+          onChange={(e) => {
+            setReqFname(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Middle Name</label>
         </div>
-        <input />
+        <input
+          name="reqMname"
+          onChange={(e) => {
+            setReqMname(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Last Name</label>
         </div>
-        <input />
+        <input
+          name="reqLname"
+          onChange={(e) => {
+            setReqLname(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Address</label>
         </div>
-        <input />
+        <input
+          name="reqAdd"
+          onChange={(e) => {
+            setReqAdd(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Email</label>
         </div>
-        <input />
+        <input
+          name="reqEmail"
+          onChange={(e) => {
+            setReqEmail(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Phone Number</label>
         </div>
-        <input />
+        <input
+          name="reqPhNo"
+          onChange={(e) => {
+            setReqPhNo(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Address Line 1</label>
         </div>
-        <input />
+        <input
+          name="reqAddLine1"
+          onChange={(e) => {
+            setReqAddLine1(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Address Line 2</label>
         </div>
-        <input />
+        <input
+          name="reqAddLine2"
+          onChange={(e) => {
+            setReqAddLine2(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Town</label>
         </div>
-        <input />
+        <input
+          name="town"
+          onChange={(e) => {
+            setTown(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Country</label>
         </div>
-        <input />
+        <input
+          name="country"
+          onChange={(e) => {
+            setCountry(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requester Post Code</label>
         </div>
-        <input />
+        <input
+          name="reqPostcode"
+          onChange={(e) => {
+            setReqPostcode(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Promotion Code</label>
         </div>
-        <input />
+        <input
+          name="promoCode"
+          onChange={(e) => {
+            setPromoCode(e.target.value);
+          }}
+        />
       </div>
       <br />
       <div className="row">
         <div className="col-md-6">
           <label>Requster Selfie Image</label>
         </div>
-        <input type="file" />
+        <input
+          type="file"
+          onChange={(e) => {
+            setSelfie(e.target.files[0]);
+          }}
+        />
       </div>
       <br />
 
-      <Button className="mb-4" variant="contained" color="primary">
+      <Button
+        className="mb-4"
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+      >
         Search
       </Button>
+      <Button variant="contained" color="primary" onClick={calculateAmount}>
+        Checkout
+      </Button>
+      {show && (
+        <div>
+          Your actual amount is: {willPrice}
+          <br />
+          Discount applied is: {discountdetail[0].discountPercentage}%
+          <br />
+          Total amount: {amount}
+          <br />
+          <PaystackButton {...componentProps} />
+        </div>
+      )}
     </div>
   );
 };

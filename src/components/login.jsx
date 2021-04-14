@@ -22,7 +22,14 @@ class Login extends Form {
       const { data } = this.state;
       const response = await auth.login(data.username, data.password);
       console.log("res", response);
-      window.location = "/";
+      if (response.data[0].type === "individualUser") {
+        window.location.href = "/individualuser/home";
+      } else if (response.data[0].type === "willAmbassdor") {
+        window.location.href = "/will-ambassador/home";
+      } else if (response.data[0].type === "organisationUser") {
+        window.location.href = "/orguserhome";
+      }
+
       toast.success("Successful Login");
       return response;
     } catch (ex) {

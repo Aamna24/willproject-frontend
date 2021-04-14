@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 const SetupDiscount = () => {
   const [type, setType] = React.useState();
-  const [fromNoQty, setfromNoQty] = React.useState();
+  const [fromNoQty, setfromNoQty] = React.useState(null);
   const [toNoQty, settoNoQty] = React.useState(null);
   const [discountPercentage, setDisPercentage] = React.useState();
   const [commissionPercentage, setComPercentage] = React.useState();
@@ -69,7 +69,7 @@ const SetupDiscount = () => {
       setType("Employee Voucher");
     } else {
       setShowField(null);
-      setType("Will Ambassador");
+      setType(e.target.value);
     }
 
     console.log("show", showFields);
@@ -86,7 +86,13 @@ const SetupDiscount = () => {
           <select onChange={handleChange}>
             <option>Please Select One</option>
             <option value="Yes">Employee Voucher</option>
-            <option value="No">Will Ambassador</option>
+            <option value="Will Ambassador">Will Ambassador</option>
+            <option value="Will Ambassador B2B Discount">
+              Will Ambassador B2B Discount
+            </option>
+            <option value="Organisation User B2B Discount">
+              Organisation User B2B Discount
+            </option>
           </select>
         </div>
       </div>

@@ -99,12 +99,6 @@ const Names = ({ setForm, formData, navigation, user }) => {
           value={requesterPostCode}
           onChange={setForm}
         />
-        <ItemForm
-          label="Reqester promotion Code"
-          name="promotionCode"
-          value={promotionCode}
-          onChange={setForm}
-        />
 
         <div>
           <Button variant="contained" color="primary" onClick={next}>

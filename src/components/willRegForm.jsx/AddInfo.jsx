@@ -3,8 +3,18 @@ import Button from "@material-ui/core/Button";
 import ItemForm from "./ItemForm";
 import * as auth from "../../services/authService";
 import { toast } from "react-toastify";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 const Contact = ({ setForm, formData, navigation, user }) => {
-  const { dateOfWill, storedWillAdd, additionalIns, willReminderFr } = formData;
+  const {
+    storedWillAdd,
+    additionalIns,
+    willReminderFr,
+    willSource,
+    createdBy,
+    willRefNo,
+    willStorageRefNo,
+  } = formData;
 
   const { previous, next } = navigation;
   const [requesterSelfie, setSelfie] = React.useState();
@@ -23,7 +33,7 @@ const Contact = ({ setForm, formData, navigation, user }) => {
     form_data.append("requesterTown", formData.requesterTown);
     form_data.append("requesterCountry", formData.requesterCountry);
     form_data.append("requesterPostCode", formData.requesterPostCode);
-    form_data.append("promotionCode", formData.promotionCode);
+    form_data.append("promotionCode", "");
     form_data.append("requesterSelfie", formData.requesterSelfie);
     form_data.append("willOwnerTitle", formData.willOwnerTitle);
     form_data.append("willOwnerFname", formData.willOwnerFname);
@@ -54,11 +64,18 @@ const Contact = ({ setForm, formData, navigation, user }) => {
     form_data.append("createdWillPDF", "");
     form_data.append("discountCode", "");
     form_data.append("discountAmount", "");
+    form_data.append("willSource", formData.willSource);
+    form_data.append("createdBy", formData.createdBy);
+    form_data.append("willRefNo", formData.willRefNo);
+    form_data.append("willStorageRefNo", formData.willStorageRefNo);
 
     const response = await auth.registerBasicWill(form_data, user.id);
     if (response.status === 201) {
-      toast.success("Will Created");
+      window.location.href = "/checkout/?id=" + formData.willRefNo;
     }
+    <Popup position="right center">
+      <div>Popup content here !!</div>
+    </Popup>;
   };
   return (
     <div className="col-xl-8 col-lg-6 col-md-8 col-sm-10 mx-auto  form p-4">
@@ -76,6 +93,45 @@ const Contact = ({ setForm, formData, navigation, user }) => {
         value={additionalIns}
         onChange={setForm}
         type="textarea"
+      />
+      <div className="row">
+        <div className="col-md-6">
+          <label>Will Source (Internal/External)</label>
+        </div>
+        <div className="col-md-6">
+          <select
+            label="Will Source (Internal/External)"
+            name="willSource"
+            value={willSource}
+            onChange={setForm}
+          >
+            <option>[Please select One]</option>
+            <option>Internal</option>
+            <option>External</option>
+          </select>
+        </div>
+      </div>
+
+      <ItemForm
+        label="Will Storage Ref No"
+        name="willStorageRefNo"
+        value={willStorageRefNo}
+        onChange={setForm}
+        type="number"
+      />
+      <ItemForm
+        label="Created By Firm"
+        name="createdBy"
+        value={createdBy}
+        onChange={setForm}
+        type="text"
+      />
+      <ItemForm
+        label="Will  Ref No"
+        name="willRefNo"
+        value={willRefNo}
+        onChange={setForm}
+        type="number"
       />
 
       <div className="row">

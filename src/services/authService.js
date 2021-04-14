@@ -11,7 +11,7 @@ const tokenKey = "token"
 export async function login(email, password) {
     const {data: jwt} = await http.post(apiPoint, { email, password });
     localStorage.setItem(tokenKey, jwt.token);
-    
+    return jwt
 }
 
 // get will
@@ -81,11 +81,46 @@ export function getEachDocDetails(id){
 }
 
 // register basic will
-// get each registered document
 export function registerBasicWill(data,id){
     const will = "/will/willregisteration/"+id
               return http.post(will,data)
 }
+
+// update basic will
+export function updateBasicWill(id,promotionCode,discountCode,discountAmount){
+    const will = "/will/updatewill/"+id
+              return http.patch(will,{promotionCode,discountCode,discountAmount})
+}
+
+// get comission listing
+export function getCommissionList(id){
+    return http.get("/users/commission/"+id)
+}
+//export function search
+export function search(){
+    return http.post("/will/search")
+}
+
+// exec will copy req form
+export function execForm(data){
+    return http.post("/will/execWill",data)
+}
+
+// update exec will after payment
+export function execWillUpdate(id,discountApplied, amountPaid){
+    return http.patch("/will/updateexecwill/"+id,{discountApplied, amountPaid})
+}
+
+// probate will req
+export function probForm(data){
+    return http.post("/will/probateregistry",data)
+}
+
+// update after payment
+export function probWillUpdate(id,discountApplied, amountPaid){
+    return http.patch("/will/updateprobwill/"+id,{discountApplied, amountPaid})
+}
+
 export function logout(){
     localStorage.removeItem(tokenKey);
 }
@@ -99,6 +134,11 @@ export function getVouchersList(){
 export function getProducts(){
     const v = "/users/products"
     return http.get(v)
+}
+
+// search form
+export function searchForm(data){
+    return http.post("/will/search", data)
 }
 export function getCurrentUser(){
     try {
@@ -124,6 +164,13 @@ export default{
     generateVoucher,
     getVouchersList,
     getProducts,
-    getVoucherDetail
+    getVoucherDetail,
+    execForm,
+    updateBasicWill,
+    getCommissionList,
+    execWillUpdate,
+    probForm,
+    probWillUpdate,
+    searchForm
   
 }

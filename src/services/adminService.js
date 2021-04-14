@@ -66,6 +66,13 @@ export function getInvoice(){
 export function updateInvoice(id,paymentID){
   return http.patch("/users/invoice/"+id,{paymentID})
 }
+
+// add commission
+export function addCommission(userID , willAmbID, commissionEarned, commissionBalance,productName,
+  userName){
+  return http.post("/users/generate-commission",{userID , willAmbID, commissionEarned, commissionBalance,productName,
+    userName})
+}
 export default{
     adminlogin,
     getCurrentUser,
@@ -78,7 +85,8 @@ export default{
     getInvoice,
     updateInvoice,
     getFlyers,
-    removeFlyer
+    removeFlyer,
+    addCommission
     
    
 }

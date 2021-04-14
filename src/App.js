@@ -36,6 +36,14 @@ import InvoiceListing from './components/adminControls/invoiceListing';
 import Payment from './components/adminControls/paymentID';
 import Flyer from './components/adminControls/flyer';
 import VoucherDetails from './components/voucherDetails';
+import ExecWillForm from './components/willRegForm.jsx/execWill';
+import ProbateForm from './components/willRegForm.jsx/probateForm';
+import testCom from './components/testCom';
+import InHome from './components/individualUser/home';
+import PaymentPage from './components/willRegForm.jsx/payment';
+import Checkout from './components/willRegForm.jsx/payment';
+import ProbateWillForm from './components/willRegForm.jsx/probateReg';
+import OrgUserHomePage from './components/orgUserHome';
 
 class App extends React.Component {
   state = {  }
@@ -82,6 +90,7 @@ class App extends React.Component {
         <Route path="/listregisteredDoc" component={listRegDoc}/>
         <Route path="/registerdocument" component={RegDocument}/>
         <Route path="/edit" component={EditDoc}/>
+        <Route path="/checkout" component={Checkout}/>
        
         <Route path="/form" render={props => <MultiStepForm user={user} {...props}/>}/>
         
@@ -89,11 +98,12 @@ class App extends React.Component {
         <Route path="/commission-listing" component={CommissionListing}/>
 
         <Route path="/register/will-ambassador" component={RegisterWillAmbassador}/>
-        <Route path="/will-ambassador/home" component={WillAHomePage}/>
+        <Route path="/will-ambassador/home" render={props => <WillAHomePage user={user} {...props}/>}/>
         <Route path="/will-ambassador/flyer-listing" component={FlyerListing} />
 
         <Route path="/register/indivdualUser" component={Register}/>
         <Route path="/register/B2B" component={RegisterB2B}/>
+        <Route path="/individualuser/home" component={InHome}/>
         
        
         <Route path="/register/orgaisationalUsers" component={RegisterOrgUser}/>
@@ -103,6 +113,11 @@ class App extends React.Component {
         <Route path="/voucherlisting" component={VoucherListing}/>
         <Route path="/voucherdetail" component={VoucherDetails}/>
         <Route path="/voucherpage" component={EmployeeVoucherPopPage}/>
+
+        <Route path="/execform" component={ExecWillForm}/>
+        <Route path="/probateform" component={ProbateWillForm}/>
+        <Route path="/test" component={testCom}/>
+        <Route path="/orguserhome" render={props => <OrgUserHomePage user={user} {...props}/>}/>
         <Redirect from="/" exact to="/home" />
 
         

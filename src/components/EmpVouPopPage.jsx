@@ -44,6 +44,8 @@ const EmployeeVoucherPopPage = () => {
   React.useEffect(getProducts, []);
   if (!discount || discount.length === 0) return <p>Cannot find any posts</p>;
   if (!products || products.length === 0) return <p>Cannot find any posts</p>;
+
+  // implementing discount of employee coucher/ b2b
   const filter = discount.data.filter((x) => x.type === "Employee Voucher");
   const filteredProduct = products.data.filter(
     (x) => x.name === "willcreation"
@@ -82,6 +84,8 @@ const EmployeeVoucherPopPage = () => {
   };
   return (
     <div className="container">
+      <h4>Employee Voucher Pop Page for B2B Client</h4>
+      <br />
       <div className="form-group">
         <div className="row">
           <div className="col-md-4">
@@ -103,10 +107,16 @@ const EmployeeVoucherPopPage = () => {
       <Button variant="contained" color="primary" onClick={calAmount}>
         Calculate Amount
       </Button>
-
+      <br />
+      <br />
       {amount && (
         <div>
-          <label>Your total amount is: {amount}</label>
+          <label>Your actual amount is: {actualPrice}</label>
+          <br />
+          <label>Discount % applied : {filter[0].discountPercentage}</label>
+          <br />
+          <label>Your final amount is: {amount}</label>
+          <br />
         </div>
       )}
 

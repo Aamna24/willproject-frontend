@@ -14,7 +14,7 @@ class LandingPage extends Component {
             color="primary"
             variant="contained"
             component={Link}
-            to="/test"
+            to="/search"
           >
             Basic Search
           </Button>
@@ -28,6 +28,28 @@ class LandingPage extends Component {
             to="/form"
           >
             Basic Will Registeration
+          </Button>
+        </div>
+        <br />
+        <div>
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/execform"
+          >
+            Executor Will Copy Request Form
+          </Button>
+        </div>
+        <br />
+        <div>
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/probateform"
+          >
+            Probate Registry Will Copy Request Form
           </Button>
         </div>
       </div>

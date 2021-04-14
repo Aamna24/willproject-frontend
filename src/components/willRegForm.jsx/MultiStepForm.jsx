@@ -5,6 +5,7 @@ import ReqDetails from "./requester";
 import WillOwnerDetails from "./willowner";
 import AdditionalInfo from "./AddInfo";
 import Review from "./Review";
+import Checkout from "./payment";
 
 const steps = [
   { id: "requester" },
@@ -45,6 +46,10 @@ const defaultData = {
   storedWillAdd: "",
   additionalIns: "",
   willReminderFr: "",
+  willSource: "",
+  createdBy: "",
+  willRefNo: 0,
+  willStorageRefNo: 0,
 };
 
 const MultiStepForm = ({ images, user }) => {
@@ -63,7 +68,7 @@ const MultiStepForm = ({ images, user }) => {
     case "additional":
       return <AdditionalInfo {...props} user={user} />;
     case "review":
-      return <Review {...props} />;
+      return <Checkout {...props} />;
 
     default:
       return null;
