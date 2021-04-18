@@ -5,14 +5,14 @@ import NavBar from './components/header'
 import { Switch,Route, Redirect} from 'react-router-dom';
 import Login from './components/login';
 import LandingPage from './components/landingPage'
-import Register from './components/IndividualSignup'
+import Register from './components/individualUser/IndividualSignup'
 import auth from './services/authService'
 import Logout from './components/logout'
-import RegisterB2B from './components/B2BSignup';
+import RegisterB2B from './components/b2bClient/B2BSignup';
 import RegisterWillAmbassador from './components/WillAmbSignup'
-import AdminLogin from './components/adminLogin';
+import AdminLogin from './components/adminControls/adminLogin';
 import RegisterOrgUser from './components/adminControls/OrganisationUserSignup';
-import AdminMainPage from './components/adminPage';
+import AdminMainPage from './components/adminControls/adminPage';
 import FlyerForm from './components/adminControls/flyerForm';
 import WillAHomePage from './components/WillAmbHome';
 import FlyerListing from './components/flyerListing';
@@ -44,8 +44,13 @@ import PaymentPage from './components/willRegForm.jsx/payment';
 import Checkout from './components/willRegForm.jsx/payment';
 import ProbateWillForm from './components/willRegForm.jsx/probateReg';
 import OrgUserHomePage from './components/orgUserHome';
-import B2BHome from './components/b2bHome';
-
+import B2BHome from './components/b2bClient/b2bHome';
+import TransactionList from './components/b2bClient/transactionList';
+import OrgUserListing from './components/adminControls/orgListing';
+import B2BVouchers from './components/adminControls/b2bvouchers';
+import ProductsPrice from './components/adminControls/productsPrice';
+import ProductsList from './components/adminControls/ProductsListing';
+import EditOrgUser from './components/adminControls/editOrgUser';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -84,6 +89,7 @@ class App extends React.Component {
         <Route path="/admin/manageusers" component={ManageUsers}/>
         <Route path="/admin/create-invoice" component={EmployeeVoucherInvoiceCreation}/>
         <Route path="/admin/invoice-listing" component={InvoiceListing}/>
+        <Route path="/admin/products-listing" component={ProductsList}/>
         <Route path="/invoice" component={Payment}/>
 
         <Route path="/will-listing" component={RegWillListing}/>
@@ -120,6 +126,11 @@ class App extends React.Component {
         <Route path="/probateform" component={ProbateWillForm}/>
         <Route path="/test" component={testCom}/>
         <Route path="/orguserhome" render={props => <OrgUserHomePage user={user} {...props}/>}/>
+        <Route path="/transactionlist" render={props => <TransactionList user={user} {...props}/>}/>
+        <Route path="/orguserlisting" component={OrgUserListing}/>
+        <Route path="/b2bvouchers" component={B2BVouchers}/>
+        <Route path="/productsprice" component={ProductsPrice}/>
+        <Route path="/editorguser" component={EditOrgUser}/>
         <Redirect from="/" exact to="/home" />
 
         

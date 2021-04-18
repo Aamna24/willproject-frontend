@@ -85,7 +85,7 @@ const SearchForm = () => {
   if (!discount || discount.length === 0) return <p></p>;
   if (!price || price.length === 0) return <p></p>;
   //base price
-  const product = price.data.filter((x) => x.name === "search");
+  const product = price.data.filter((x) => x.name === "Basic Will Search");
   const willPrice = product[0].basePrice;
 
   //check ambassador code matches or not

@@ -47,9 +47,9 @@ export function registerWillAmbassdor(data) {
 }
 
 //generate vouchers
-export function generateVoucher(userID, discountID, paymentNumber,quantity){
+export function generateVoucher(userID, discountID, paymentNumber,quantity,b2bClient,processedBy,amount){
     const voucher = "/users/vouchers"
-    return http.post(voucher,{userID, discountID, paymentNumber,quantity})
+    return http.post(voucher,{userID, discountID, paymentNumber,quantity,b2bClient,processedBy,amount})
 }
 
 //get detail of eacg voucher

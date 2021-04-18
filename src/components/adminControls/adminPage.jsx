@@ -73,6 +73,39 @@ class AdminMainPage extends Component {
             Generate B2B Employee Voucher Invoice
           </Button>
         </div>
+        <br />
+        <div className="row">
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/orguserlisting"
+          >
+            Show Organisation User Listing
+          </Button>
+        </div>
+        <br />
+        <div className="row">
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/b2bvouchers"
+          >
+            B2B Vouchers
+          </Button>
+        </div>
+        <br />
+        <div className="row">
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/productsprice"
+          >
+            Set up Products Price
+          </Button>
+        </div>
       </div>
     );
   }

@@ -73,6 +73,11 @@ export function addCommission(userID , willAmbID, commissionEarned, commissionBa
   return http.post("/users/generate-commission",{userID , willAmbID, commissionEarned, commissionBalance,productName,
     userName})
 }
+
+// update price
+export function updatePrice(product, amount){
+  return http.patch("/users/updateproduct",{product,amount})
+}
 export default{
     adminlogin,
     getCurrentUser,
@@ -86,7 +91,8 @@ export default{
     updateInvoice,
     getFlyers,
     removeFlyer,
-    addCommission
+    addCommission,
+    updatePrice
     
    
 }

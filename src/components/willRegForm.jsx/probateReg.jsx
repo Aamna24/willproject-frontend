@@ -151,7 +151,7 @@ const ProbateWillForm = () => {
   if (!price || price.length === 0) return <p></p>;
 
   //base price
-  const product = price.data.filter((x) => x.name === "probate");
+  const product = price.data.filter((x) => x.name === "Probate Registry Will");
   const willPrice = product[0].basePrice;
 
   //check ambassador code matches or not

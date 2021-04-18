@@ -1,9 +1,15 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import auth from "../services/authService";
+import auth from "../../services/adminService";
 import Form from "react-bootstrap/Form";
 
-const IndividualSignup = () => {
+const EditOrgUser = () => {
+  const querystring = window.location.search;
+  const URLParams = new URLSearchParams(querystring);
+  const profile_id = URLParams.get("profile");
+
+  const [user, setUser] = React.useState();
+
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [selfie, setSelfie] = React.useState();
@@ -13,26 +19,38 @@ const IndividualSignup = () => {
   const [town, setTown] = React.useState();
   const [country, setCountry] = React.useState();
   const [name, setName] = React.useState();
+  const getData = () => {
+    auth
+      .getUsersList()
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return user;
+  };
+  //getData();
+  React.useEffect(getData, []);
+  if (!user || user.length === 0) return <p></p>;
 
-  const handleSubmit = async () => {
-    console.log(selfie);
+  const filter = user.data.filter((userf) => userf._id === profile_id);
+
+  const handleUpdate = () => {
     var data = new FormData();
-
+    data.append("name", name);
     data.append("email", email);
     data.append("password", password);
-    data.append("selfie", selfie);
     data.append("add1", add1);
     data.append("add2", add2);
     data.append("phoneNo", phoneNo);
     data.append("town", town);
     data.append("country", country);
-    data.append("name", name);
-    const response = await auth.register(data);
-    console.log(response);
+    console.log("data", town);
   };
-
   return (
-    <div className="container col-md-6">
+    <div className="container">
+      <h5 className="mb-5">Edit Profile</h5>
       <Form>
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
@@ -40,6 +58,7 @@ const IndividualSignup = () => {
             type="name"
             class="form-control"
             name="name"
+            defaultValue={filter[0].name}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -51,6 +70,7 @@ const IndividualSignup = () => {
             type="email"
             class="form-control"
             name="email"
+            value={filter[0].email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -58,10 +78,11 @@ const IndividualSignup = () => {
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Password</label>
-          <textarea
+          <input
             type="password"
             class="form-control"
             name="password"
+            value={filter[0].password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -69,14 +90,7 @@ const IndividualSignup = () => {
         </div>
         <div class="custom-file">
           <label for="customFile">Selfie</label>
-          <input
-            type="file"
-            name="selfie"
-            onChange={(e) => {
-              setSelfie(e.target.files[0]);
-              console.log(selfie);
-            }}
-          />
+          <input type="file" name="selfie" />
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Town</label>
@@ -84,6 +98,7 @@ const IndividualSignup = () => {
             type="text"
             class="form-control"
             name="text"
+            value={filter[0].town}
             onChange={(e) => {
               setTown(e.target.value);
             }}
@@ -95,6 +110,7 @@ const IndividualSignup = () => {
             type="text"
             class="form-control"
             name="add1"
+            value={filter[0].add1}
             onChange={(e) => {
               setAdd1(e.target.value);
             }}
@@ -106,6 +122,7 @@ const IndividualSignup = () => {
             type="text"
             class="form-control"
             name="add2"
+            value={filter[0].add2}
             onChange={(e) => {
               setAdd2(e.target.value);
             }}
@@ -117,6 +134,7 @@ const IndividualSignup = () => {
             type="number"
             class="form-control"
             name="phoneNo"
+            value={filter[0].phoneNo}
             onChange={(e) => {
               setPhoneNo(e.target.value);
             }}
@@ -128,6 +146,7 @@ const IndividualSignup = () => {
             type="text"
             class="form-control"
             name="country"
+            value={filter[0].country}
             onChange={(e) => {
               setCountry(e.target.value);
             }}
@@ -135,8 +154,13 @@ const IndividualSignup = () => {
         </div>
 
         <div>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Register
+          <Button
+            variant="contained"
+            color="primary"
+            className="mb-5"
+            onClick={handleUpdate}
+          >
+            Update
           </Button>
         </div>
       </Form>
@@ -144,4 +168,4 @@ const IndividualSignup = () => {
   );
 };
 
-export default IndividualSignup;
+export default EditOrgUser;

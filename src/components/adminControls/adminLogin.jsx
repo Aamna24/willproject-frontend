@@ -1,7 +1,7 @@
 import React from "react";
-import Form from "../common/form";
+import Form from "../../common/form";
 import Joi from "joi-browser";
-import auth from "../services/adminService";
+import auth from "../../services/adminService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();

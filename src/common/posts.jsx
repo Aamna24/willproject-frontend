@@ -18,6 +18,7 @@ const Formdata = (props) => {
   const fields = [
     { key: "name", _style: { width: "30%" } },
     "img",
+    "description",
 
     {
       key: "buttons",

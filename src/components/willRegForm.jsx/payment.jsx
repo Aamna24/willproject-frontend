@@ -115,7 +115,9 @@ const Checkout = () => {
   if (!price || price.length === 0) return <p></p>;
 
   //base price
-  const product = price.data.filter((x) => x.name === "basicwill");
+  const product = price.data.filter(
+    (x) => x.name === "Basic Will and Will Documents Registeration"
+  );
   const willPrice = product[0].basePrice;
 
   //check ambassador code matches or not

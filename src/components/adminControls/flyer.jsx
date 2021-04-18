@@ -3,7 +3,6 @@ import * as admin from "../../services/adminService";
 import { CButton, CDataTable } from "@coreui/react";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import authService from "../../services/authService";
 
 const Flyer = () => {
   const [flyers, setflyers] = useState([]);
@@ -30,6 +29,7 @@ const Flyer = () => {
     { key: "name", label: "Flyer Name" },
     { key: "img", label: "Flyer Image" },
     { key: "type", label: "Flyer Type" },
+    { key: "description", label: "Flyer Description" },
 
     {
       key: "remove",

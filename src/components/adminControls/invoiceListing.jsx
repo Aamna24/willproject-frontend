@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CButton, CDataTable, CCollapse, CCardBody } from "@coreui/react";
-import * as auth from "../../services/adminService";
+import * as auth from "../../services/authService";
 import { toast } from "react-toastify";
 toast.configure();
 
@@ -9,7 +9,7 @@ const InvoiceListing = () => {
   const [details, setDetails] = useState([]);
   const getData = () => {
     auth
-      .getInvoice()
+      .getVouchersList()
       .then((res) => {
         setInvoice(res.data);
       })
@@ -41,9 +41,9 @@ const InvoiceListing = () => {
 
   const fields = [
     { key: "date", label: "Invoice Date" },
-    { key: "number", label: "Invoice Number" },
+    { key: "invoiceID", label: "Invoice Number" },
     { key: "b2bClient", label: "B2B Client" },
-    { key: "noOfVoucher", label: "No Of Voucher" },
+    { key: "quantity", label: "No Of Voucher" },
     { key: "amount", label: "Amount" },
     { key: "processedBy", label: "Processed By" },
     { key: "status", label: "Status" },
@@ -92,7 +92,7 @@ const InvoiceListing = () => {
                 shape="square"
                 size="sm"
                 onClick={(e) => {
-                  window.location.href = "/invoice/?id=" + item.number;
+                  window.location.href = "/invoice/?id=" + item.invoiceID;
                 }}
               >
                 Generate

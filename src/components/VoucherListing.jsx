@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const VoucherListing = () => {
   const [voucher, setVoucher] = React.useState();
+  const [invoice, setInvoice] = React.useState();
   const getData = () => {
     auth
       .getVouchersList()
@@ -21,11 +22,14 @@ const VoucherListing = () => {
   };
   //getData();
   React.useEffect(getData, []);
+
   const user = admin.getCurrentUser();
   const id = user.id;
-
+  const name = user.name;
   if (!voucher || voucher.length === 0) return <p>Cannot find any posts</p>;
-  const filtered = voucher.data.filter((x) => x.userID === id);
+  const filtered = voucher.data.filter(
+    (x) => x.userID === id || x.b2bClient === name
+  );
   if (!filtered || filtered.length === 0) return <p>Cannot find any posts</p>;
 
   const arr = [];
@@ -36,7 +40,7 @@ const VoucherListing = () => {
   const fields = [
     { key: "date", label: "Date" },
     { key: "voucherCode", label: "Code" },
-    { key: "voucherStatus", label: "Status" },
+    { key: "status", label: "Status" },
     { key: "quantity", label: "Quantity" },
     { key: "invoiceID", label: "Invoice ID" },
     {

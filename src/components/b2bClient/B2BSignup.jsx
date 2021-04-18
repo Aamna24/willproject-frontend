@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import auth from "../services/authService";
+import auth from "../../services/authService";
 import Form from "react-bootstrap/Form";
 
 const B2bSignup = () => {

@@ -55,15 +55,21 @@ const EmployeeVoucherInvoiceCreation = () => {
 
     data.append("amount", amount);
     const processedBy = user.name;
-
-    const response = await auth.generateInvoice(
+    const userID = "";
+    const discountID = "";
+    const paymentNumber = "";
+    const quantity = parseInt(noOfVoucher);
+    const response = await autherize.generateVoucher(
+      userID,
+      discountID,
+      paymentNumber,
+      quantity,
       b2bClient,
-      parseInt(noOfVoucher),
-      amount,
-      processedBy
+      processedBy,
+      amount
     );
-
-    window.location.href = "/admin/invoice-listing";
+    console.log(response);
+    //window.location.href = "/admin/invoice-listing";
   };
   return (
     <div className="container">

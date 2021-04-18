@@ -150,7 +150,9 @@ const ExecWillForm = () => {
   if (!price || price.length === 0) return <p></p>;
 
   //base price
-  const product = price.data.filter((x) => x.name === "execwill");
+  const product = price.data.filter(
+    (x) => x.name === "Executor Will Copy request"
+  );
   const willPrice = product[0].basePrice;
 
   //check ambassador code matches or not

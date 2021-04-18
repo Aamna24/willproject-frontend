@@ -19,6 +19,8 @@ const Navigation = ({ user }) => {
           <Nav className="mr-auto"></Nav>
           <Nav>
             <Nav.Link href="/home">HOME</Nav.Link>
+            <Nav.Link href="">ABOUT US</Nav.Link>
+            <Nav.Link href="">CONTACT</Nav.Link>
             {!user && (
               <React.Fragment>
                 <Nav.Link href="/login">LOGIN</Nav.Link>

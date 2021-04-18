@@ -21,7 +21,9 @@ class Login extends Form {
     try {
       const { data } = this.state;
       const response = await auth.login(data.username, data.password);
-      console.log("res", response);
+      if (response.data[0].status === 404) {
+        console.log("invalid");
+      }
       if (response.data[0].type === "individualUser") {
         window.location.href = "/individualuser/home";
       } else if (response.data[0].type === "willAmbassdor") {
@@ -35,10 +37,10 @@ class Login extends Form {
       toast.success("Successful Login");
       return response;
     } catch (ex) {
-      if (ex.response && ex.respone.status === 404) {
+      if (ex.response && ex.response.status === 404) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
-        this.setState({ errors });
+        this.setState(errors);
         toast.error("An error occurred");
       }
     }

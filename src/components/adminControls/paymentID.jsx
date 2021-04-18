@@ -6,8 +6,8 @@ const Payment = () => {
   const querystring = window.location.search;
   const URLParams = new URLSearchParams(querystring);
   const id = URLParams.get("id");
+
   const handleClick = async () => {
-    console.log(paymentID);
     await auth.updateInvoice(id, paymentID);
     window.location.href = "/admin/invoice-listing";
   };
