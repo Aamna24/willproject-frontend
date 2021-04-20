@@ -2,7 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import auth from "../../services/adminService";
 import Form from "react-bootstrap/Form";
-
+import { toast } from "react-toastify";
+toast.configure();
 const EditOrgUser = () => {
   const querystring = window.location.search;
   const URLParams = new URLSearchParams(querystring);
@@ -10,15 +11,15 @@ const EditOrgUser = () => {
 
   const [user, setUser] = React.useState();
 
-  const [email, setEmail] = React.useState();
-  const [password, setPassword] = React.useState();
-  const [selfie, setSelfie] = React.useState();
-  const [phoneNo, setPhoneNo] = React.useState();
-  const [add1, setAdd1] = React.useState();
-  const [add2, setAdd2] = React.useState();
-  const [town, setTown] = React.useState();
-  const [country, setCountry] = React.useState();
-  const [name, setName] = React.useState();
+  const [email, setEmail] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
+  const [selfie, setSelfie] = React.useState(null);
+  const [phoneNo, setPhoneNo] = React.useState(null);
+  const [add1, setAdd1] = React.useState(null);
+  const [add2, setAdd2] = React.useState(null);
+  const [town, setTown] = React.useState(null);
+  const [country, setCountry] = React.useState(null);
+  const [name, setName] = React.useState(null);
   const getData = () => {
     auth
       .getUsersList()
@@ -36,17 +37,50 @@ const EditOrgUser = () => {
 
   const filter = user.data.filter((userf) => userf._id === profile_id);
 
-  const handleUpdate = () => {
-    var data = new FormData();
-    data.append("name", name);
-    data.append("email", email);
-    data.append("password", password);
-    data.append("add1", add1);
-    data.append("add2", add2);
-    data.append("phoneNo", phoneNo);
-    data.append("town", town);
-    data.append("country", country);
-    console.log("data", town);
+  const handleUpdate = async () => {
+    const data = new FormData();
+    if (name === null) {
+      setName(filter[0].name);
+    }
+    if (email == null) {
+      setEmail(filter[0].email);
+    }
+    if (password === null) {
+      setPassword(filter[0].password);
+    }
+    if (country === null) {
+      setCountry(filter[0].country);
+    }
+    if (town === null) {
+      setTown(filter[0].town);
+    }
+    if (add1 === null) {
+      setAdd1(filter[0].add1);
+    }
+    if (add2 === null) {
+      setAdd2(filter[0].add2);
+    }
+    if (phoneNo === null) {
+      setPhoneNo(filter[0].phoneNo);
+    }
+
+    const id = profile_id;
+
+    // console.log(d);
+    const response = await auth.updateProfile(
+      id,
+      name,
+      email,
+      password,
+      town,
+      country,
+      add1,
+      add2,
+      phoneNo
+    );
+    if (response.status === 200) {
+      toast.success("Profile Updated");
+    }
   };
   return (
     <div className="container">
@@ -88,10 +122,7 @@ const EditOrgUser = () => {
             }}
           />
         </div>
-        <div class="custom-file">
-          <label for="customFile">Selfie</label>
-          <input type="file" name="selfie" />
-        </div>
+
         <div class="form-group">
           <label for="exampleInputEmail1">Town</label>
           <input

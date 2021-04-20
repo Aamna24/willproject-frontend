@@ -63,7 +63,13 @@ const OrgUserListing = () => {
       filter: false,
     },
   ];
-
+  const handleDisableUser = async (id) => {
+    const response = await auth.DisableUser(id);
+    if (response.status === 200) {
+      toast.success("User is disabled");
+      window.location.reload();
+    }
+  };
   return (
     <div className="container">
       <h5 className="mb-5">Showing List Of Organistion Users</h5>
@@ -146,6 +152,7 @@ const OrgUserListing = () => {
                     variant="outline"
                     shape="square"
                     size="sm"
+                    onClick={() => handleDisableUser(item._id)}
                   >
                     Deactivate
                   </CButton>

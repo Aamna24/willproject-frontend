@@ -1,7 +1,8 @@
 import React from "react";
 import * as auth from "../../services/adminService";
 import { CButton, CDataTable } from "@coreui/react";
-
+import { toast } from "react-toastify";
+toast.configure();
 const ManageUsers = () => {
   const [users, setUsers] = React.useState();
 
@@ -44,6 +45,13 @@ const ManageUsers = () => {
     },
   ];
 
+  const handleDisableUser = async (id) => {
+    const response = await auth.DisableUser(id);
+    if (response.status === 200) {
+      toast.success("User is disabled");
+      window.location.reload();
+    }
+  };
   return (
     <div className="container">
       <CDataTable
@@ -65,9 +73,7 @@ const ManageUsers = () => {
                   color="primary"
                   shape="square"
                   size="sm"
-                  onClick={(e) => {
-                    console.log("clicked");
-                  }}
+                  onClick={() => handleDisableUser(item._id)}
                 >
                   Deactivate
                 </CButton>

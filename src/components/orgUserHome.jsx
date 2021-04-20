@@ -27,7 +27,7 @@ const OrgUserHomePage = ({ user }) => {
           variant="contained"
           color="primary"
         >
-          Generate Balance
+          View Balance
         </Button>
       </div>
       <br />

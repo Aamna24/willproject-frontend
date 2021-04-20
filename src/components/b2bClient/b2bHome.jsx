@@ -24,6 +24,16 @@ const B2BHome = () => {
           View Transaction List
         </Button>
       </div>
+      <div className="row mb-5 ml-5">
+        <Button
+          component={Link}
+          to="/b2b/voucherslist"
+          variant="contained"
+          color="primary"
+        >
+          View List of individual vouchers
+        </Button>
+      </div>
     </>
   );
 };

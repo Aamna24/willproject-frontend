@@ -44,17 +44,22 @@ const ExecWillForm = () => {
       const userName = "";
       const willAmbID = filtercode[0]._id;
       const productName = product[0].name;
+      const amountPaid = amount;
+      const transactionID = response.reference;
+      const sale = await admin.addSale(productName, amountPaid, transactionID);
+      const salesID = sale.data.data.salesID;
       const res = await admin.addCommission(
         userID,
         willAmbID,
         commissionEarned,
         commissionBalance,
         productName,
-        userName
+        userName,
+        salesID
       );
       const discountCode = discountdetail[0].discountCode;
       const discountApplied = discountdetail[0].discountPercentage;
-      const amountPaid = amount;
+
       const id = willRegNo;
       await auth.execWillUpdate(id, discountApplied, amountPaid);
     }

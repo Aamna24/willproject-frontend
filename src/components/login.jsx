@@ -42,6 +42,13 @@ class Login extends Form {
         errors.username = ex.response.data;
         this.setState(errors);
         toast.error("An error occurred");
+      } else {
+        if (ex.response && ex.response.status === 400) {
+          const errors = { ...this.state.errors };
+          errors.username = ex.response.data;
+          this.setState(errors);
+          toast.error("Your account is disabled");
+        }
       }
     }
   };

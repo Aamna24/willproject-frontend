@@ -25,13 +25,13 @@ const B2BVouchers = ({ user }) => {
   const fields = [
     { key: "date", label: "Date" },
     { key: "voucherCode", label: "Voucher Code" },
-    { key: "quantity", label: "Quantity" },
+    { key: "status", label: "Status" },
 
     { key: "b2bClient", label: "B2b Client Name" },
   ];
   return (
     <div className="container">
-      <h5 className="mb-5">Showing B2B Vouchers </h5>
+      <h5 className="mb-5">Showing All B2B Vouchers </h5>
       <CDataTable
         items={arr[1]}
         fields={fields}

@@ -13,6 +13,7 @@ const SetupDiscount = () => {
   const [discountPercentage, setDisPercentage] = React.useState();
   const [commissionPercentage, setComPercentage] = React.useState();
   const [showFields, setShowField] = React.useState();
+  const [amount, setAmount] = React.useState(null);
 
   const [discounts, setDis] = React.useState();
   const getData = () => {
@@ -45,19 +46,13 @@ const SetupDiscount = () => {
   ];
 
   const handleSubmit = async () => {
-    console.log(
-      type,
-      fromNoQty,
-      toNoQty,
-      discountPercentage,
-      commissionPercentage
-    );
     const response = await auth.setupDiscount(
       type,
       fromNoQty,
       toNoQty,
       discountPercentage,
-      commissionPercentage
+      commissionPercentage,
+      amount
     );
     if (response.status === 200) {
       toast.success("Discount Setup Successfully");
@@ -124,35 +119,52 @@ const SetupDiscount = () => {
               }}
             />
           </div>
+          <br />
+          <div className="row">
+            <div className="col-md-6">
+              <label>Amount</label>
+            </div>
+
+            <input
+              name="amount"
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
+            />
+          </div>
         </div>
       )}
       <br />
 
       <div>
-        <div className="row">
-          <div className="col-md-6">
-            <label>Discount Percentage</label>
-          </div>
-          <input
-            type="number"
-            onChange={(e) => {
-              setDisPercentage(e.target.value);
-            }}
-          />
-        </div>
-        <br />
-        <br />
-        <div className="row">
-          <div className="col-md-6">
-            <label>Commission Percentage</label>
-          </div>
-          <input
-            type="number"
-            onChange={(e) => {
-              setComPercentage(e.target.value);
-            }}
-          />
-        </div>
+        {!showFields && (
+          <>
+            <div className="row">
+              <div className="col-md-6">
+                <label>Discount Percentage</label>
+              </div>
+              <input
+                type="number"
+                onChange={(e) => {
+                  setDisPercentage(e.target.value);
+                }}
+              />
+            </div>
+            <br />
+            <br />
+            <div className="row">
+              <div className="col-md-6">
+                <label>Commission Percentage</label>
+              </div>
+              <input
+                type="number"
+                onChange={(e) => {
+                  setComPercentage(e.target.value);
+                }}
+              />
+            </div>
+          </>
+        )}
 
         <br />
 

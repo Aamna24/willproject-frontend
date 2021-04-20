@@ -13,6 +13,7 @@ const CommissionListing = () => {
   const [bankName, setBankName] = useState();
   const [bankAccName, setAccName] = useState();
   const [commissionBalance, setCommissionBalance] = React.useState();
+
   const handleClose = () => setShow(false);
   const handleShow = (item) => {
     setShow(true);
@@ -91,7 +92,7 @@ const CommissionListing = () => {
                     variant="outline"
                     shape="square"
                     size="sm"
-                    onClick={handleShow(item.commissionBalance)}
+                    onClick={() => handleShow(item.commissionBalance)}
                   >
                     Generate Balance Withdrawl
                   </CButton>

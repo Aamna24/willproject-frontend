@@ -20,9 +20,9 @@ export function uploadFlyer(data){
 }
 
 
-export async function setupDiscount(type, fromNoQty, toNoQty, discountPercentage,commissionPercentage){
+export async function setupDiscount(type, fromNoQty, toNoQty, discountPercentage,commissionPercentage,amount){
 
-  return await http.post("/users/setup-discount",{type, fromNoQty, toNoQty, discountPercentage,commissionPercentage});
+  return await http.post("/users/setup-discount",{type, fromNoQty, toNoQty, discountPercentage,commissionPercentage,amount});
 }
 
 // get discounts list
@@ -66,17 +66,43 @@ export function getInvoice(){
 export function updateInvoice(id,paymentID){
   return http.patch("/users/invoice/"+id,{paymentID})
 }
-
+// get transactions
+export function getTransactionList(){
+  return http.get("/users/transactionlist")
+}
 // add commission
 export function addCommission(userID , willAmbID, commissionEarned, commissionBalance,productName,
-  userName){
+  userName,salesID){
   return http.post("/users/generate-commission",{userID , willAmbID, commissionEarned, commissionBalance,productName,
-    userName})
+    userName,salesID})
 }
-
+// disable user
+export function DisableUser(id){
+  return http.patch("/users/disable/"+id)
+}
 // update price
 export function updatePrice(product, amount){
   return http.patch("/users/updateproduct",{product,amount})
+}
+
+// generate transaction
+export function transaction(userid, discountID,paymentNumber,quantity,b2bClient,processedBy,amount){
+  return http.post("/users/transaction",{userid, discountID,paymentNumber,quantity,b2bClient,processedBy,amount})
+}
+
+// update org user profile
+export function updateProfile(id,name, email, password, town,country,add1,add2,phoneNo){
+  return http.patch("/users/editprofile/"+id,{name, email, password, town,country,add1,add2,phoneNo})
+}
+
+// add sale
+export function addSale(product, amount, transactionID){
+  return http.post("/users/sales",{product, amount, transactionID})
+}
+
+// get sales
+export function getSales(){
+  return http.get("/users/sales")
 }
 export default{
     adminlogin,
@@ -92,7 +118,13 @@ export default{
     getFlyers,
     removeFlyer,
     addCommission,
-    updatePrice
+    updatePrice,
+    DisableUser,
+    transaction,
+    getTransactionList,
+    updateProfile,
+    addSale,
+    getSales
     
    
 }

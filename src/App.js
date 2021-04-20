@@ -8,12 +8,19 @@ import LandingPage from './components/landingPage'
 import Register from './components/individualUser/IndividualSignup'
 import auth from './services/authService'
 import Logout from './components/logout'
+
 import RegisterB2B from './components/b2bClient/B2BSignup';
 import RegisterWillAmbassador from './components/WillAmbSignup'
+
 import AdminLogin from './components/adminControls/adminLogin';
 import RegisterOrgUser from './components/adminControls/OrganisationUserSignup';
 import AdminMainPage from './components/adminControls/adminPage';
 import FlyerForm from './components/adminControls/flyerForm';
+import SetupDiscount from './components/adminControls/setupDiscount';
+import ManageUsers from './components/adminControls/manageUsers';
+import InvoiceListing from './components/adminControls/invoiceListing';
+
+
 import WillAHomePage from './components/WillAmbHome';
 import FlyerListing from './components/flyerListing';
 import CommissionListing from './components/comListing';
@@ -21,18 +28,15 @@ import BalanceRequest from './components/balanceReq';
 
 import RegWillListing from './components/regWillListing';
 import RegDocument from './components/registeredDocuments/regDocument';
-import SetupDiscount from './components/adminControls/setupDiscount';
 import Details from './common/willDetail';
 import listRegDoc from './components/registeredDocuments/listRegDoc'
 import EditDoc from './components/registeredDocuments/editDocument';
 import SearchForm from './components/basicSearch';
 
 import MultiStepForm from './components/willRegForm.jsx/MultiStepForm'
-import ManageUsers from './components/adminControls/manageUsers';
 import EmployeeVoucherPopPage from './components/EmpVouPopPage';
 import VoucherListing from './components/VoucherListing';
 import EmployeeVoucherInvoiceCreation from './components/adminControls/invoiceCreation';
-import InvoiceListing from './components/adminControls/invoiceListing';
 import Payment from './components/adminControls/paymentID';
 import Flyer from './components/adminControls/flyer';
 import VoucherDetails from './components/voucherDetails';
@@ -51,6 +55,9 @@ import B2BVouchers from './components/adminControls/b2bvouchers';
 import ProductsPrice from './components/adminControls/productsPrice';
 import ProductsList from './components/adminControls/ProductsListing';
 import EditOrgUser from './components/adminControls/editOrgUser';
+import Transactions from './components/adminControls/b2btransactions';
+import B2bIndividualVoucherList from './components/b2bClient/vouchersList';
+import Sales from './components/adminControls/sales';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -80,8 +87,10 @@ class App extends React.Component {
         <Route path="/logout" component={Logout} />
         <Route path="/home" component={LandingPage}/>
 
+      
         <Route path="/admin/login" component={AdminLogin}/>
         <Route path="/adminhome" component={AdminMainPage}/>
+        <Route path="/register/orgaisationalUsers" component={RegisterOrgUser}/>
         <Route path="/admin/create-flyer" component={FlyerForm}/>
         <Route path="/admin/flyer" component={Flyer}/>
         <Route path="/admin/balance-request" component={BalanceRequest}/>
@@ -90,6 +99,9 @@ class App extends React.Component {
         <Route path="/admin/create-invoice" component={EmployeeVoucherInvoiceCreation}/>
         <Route path="/admin/invoice-listing" component={InvoiceListing}/>
         <Route path="/admin/products-listing" component={ProductsList}/>
+        <Route path="/admin/transactions" component={Transactions}/>
+        <Route path="/admin/sales" component={Sales}/>
+
         <Route path="/invoice" component={Payment}/>
 
         <Route path="/will-listing" component={RegWillListing}/>
@@ -99,6 +111,7 @@ class App extends React.Component {
         <Route path="/edit" component={EditDoc}/>
         <Route path="/checkout" component={Checkout}/>
        
+
         <Route path="/form" render={props => <MultiStepForm user={user} {...props}/>}/>
         
 
@@ -113,7 +126,6 @@ class App extends React.Component {
         <Route path="/individualuser/home" component={InHome}/>
         
        
-        <Route path="/register/orgaisationalUsers" component={RegisterOrgUser}/>
 
         <Route path="/search" component={SearchForm}/>
         
@@ -131,6 +143,9 @@ class App extends React.Component {
         <Route path="/b2bvouchers" component={B2BVouchers}/>
         <Route path="/productsprice" component={ProductsPrice}/>
         <Route path="/editorguser" component={EditOrgUser}/>
+        <Route path="/b2b/voucherslist" render={props => <B2bIndividualVoucherList user={user} {...props}/>}/>
+
+
         <Redirect from="/" exact to="/home" />
 
         

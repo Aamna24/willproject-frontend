@@ -58,6 +58,9 @@ const ProbateWillForm = () => {
       const amountPaid = amount;
       const id = willRegNo;
       await auth.probWillUpdate(id, discountApplied, amountPaid);
+      const transactionID = response.reference;
+
+      await admin.addSale(productName, amountPaid, transactionID);
     }
   };
   // you can call this function anything
@@ -151,7 +154,9 @@ const ProbateWillForm = () => {
   if (!price || price.length === 0) return <p></p>;
 
   //base price
+  console.log(price);
   const product = price.data.filter((x) => x.name === "Probate Registry Will");
+  console.log(product);
   const willPrice = product[0].basePrice;
 
   //check ambassador code matches or not

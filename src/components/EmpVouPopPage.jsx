@@ -79,14 +79,14 @@ const EmployeeVoucherPopPage = () => {
   };
   const handlePaystackSuccessAction = async (response) => {
     // Implementation for whatever you want to do with email and after success call.
-
     if (response.status === "success") {
       const userid = user.id;
       const discountID = filter[0]._id;
-      const paymentNumber = 0;
-      const b2bClient = "";
+      //const paymentNumber = 0;
+      const b2bClient = user.name;
       const processedBy = "";
-      const resp = await autherize.generateVoucher(
+      const paymentNumber = response.reference;
+      const transaction = await auth.transaction(
         userid,
         discountID,
         paymentNumber,
@@ -95,13 +95,25 @@ const EmployeeVoucherPopPage = () => {
         processedBy,
         amount
       );
-
-      const id = resp.data.data.invoiceID;
-
       const paymentID = response.reference;
-      const result = await auth.updateInvoice(id, paymentID);
-      if (result.status === 201) {
-        window.location.href = "/voucherlisting";
+      console.log(transaction.status);
+      if (transaction.status === 200) {
+        const invoiceID = transaction.data.data.invoiceID;
+        var i = 0;
+        for (i = 0; i < quantity; i++) {
+          await autherize.generateVoucher(
+            userid,
+            paymentNumber,
+            b2bClient,
+            invoiceID
+          );
+        }
+
+        const id = transaction.data.data.invoiceID;
+        const result = await auth.updateInvoice(id, paymentID);
+        if (result.status === 200) {
+          window.location.href = "/voucherlisting";
+        }
       }
     }
   };

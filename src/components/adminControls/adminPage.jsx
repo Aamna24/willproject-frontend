@@ -106,6 +106,27 @@ class AdminMainPage extends Component {
             Set up Products Price
           </Button>
         </div>
+        <br />
+        <div className="row">
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/admin/transactions"
+          >
+            Show b2b transactions list
+          </Button>
+        </div>
+        <div className="row">
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/admin/sales"
+          >
+            See all sales
+          </Button>
+        </div>
       </div>
     );
   }

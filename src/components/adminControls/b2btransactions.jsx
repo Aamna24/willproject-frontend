@@ -2,7 +2,7 @@ import React from "react";
 import * as auth from "../../services/adminService";
 import { CButton, CDataTable } from "@coreui/react";
 
-const TransactionList = ({ user }) => {
+const Transactions = ({ user }) => {
   const [vouchers, setVouchers] = React.useState();
   const getData = () => {
     auth
@@ -17,24 +17,23 @@ const TransactionList = ({ user }) => {
   };
   //getData();
   React.useEffect(getData, []);
-  if (!user || user.length == 0) return <p></p>;
   if (!vouchers || vouchers.length === 0) return <p>No vouchers to show</p>;
-  const filtered = vouchers.data.filter(
-    (voucher) => voucher.userID === user.id
-  );
 
+  const arr = [];
+  const obj = Object.entries(vouchers);
+  obj.forEach(([key, value]) => arr.push(value));
   const fields = [
     { key: "date", label: "Date" },
-
-    { key: "quantity", label: "Quantity" },
-    { key: "paymentNumber", label: "Payment Number" },
-    { key: "amount", label: "Amount Paid" },
+    { key: "b2bClient", label: "B2B Client Name" },
+    { key: "paymentNumber", label: "Transaction ID" },
+    { key: "quantity", label: "No of Vouchers" },
+    { key: "amount", label: "Amount" },
   ];
   return (
     <div className="container">
-      <h5 className="mb-5">Showing Transaction List </h5>
+      <h5 className="mb-5">Showing All B2B Vouchers Transactions</h5>
       <CDataTable
-        items={filtered}
+        items={arr[1]}
         fields={fields}
         columnFilter
         tableFilter
@@ -48,4 +47,4 @@ const TransactionList = ({ user }) => {
   );
 };
 
-export default TransactionList;
+export default Transactions;
