@@ -18,6 +18,7 @@ axios.interceptors.response.use(null, error => {
     return Promise.reject(error);
 });
 
+// eslint-disable-next-line
 export default {
     get: axios.get,
     post: axios.post,

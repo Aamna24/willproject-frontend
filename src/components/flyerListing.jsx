@@ -1,8 +1,7 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState } from "react";
 
 import posts from "../common/posts";
 import postLoading from "../common/postLoading";
-import * as auth from "../services/authService";
 
 const FlyerListing = () => {
   const PostLoading = postLoading(posts);

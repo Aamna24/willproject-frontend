@@ -31,22 +31,20 @@ import RegDocument from './components/registeredDocuments/regDocument';
 import Details from './common/willDetail';
 import listRegDoc from './components/registeredDocuments/listRegDoc'
 import EditDoc from './components/registeredDocuments/editDocument';
-import SearchForm from './components/basicSearch';
+import SearchForm from './components/products/basicSearch';
 
-import MultiStepForm from './components/willRegForm.jsx/MultiStepForm'
+import MultiStepForm from './components/products/BasicWill/MultiStepForm'
 import EmployeeVoucherPopPage from './components/EmpVouPopPage';
 import VoucherListing from './components/VoucherListing';
 import EmployeeVoucherInvoiceCreation from './components/adminControls/invoiceCreation';
 import Payment from './components/adminControls/paymentID';
 import Flyer from './components/adminControls/flyer';
 import VoucherDetails from './components/voucherDetails';
-import ExecWillForm from './components/willRegForm.jsx/execWill';
-import ProbateForm from './components/willRegForm.jsx/probateForm';
+import ExecWillForm from './components/products/execWill';
 import testCom from './components/testCom';
 import InHome from './components/individualUser/home';
-import PaymentPage from './components/willRegForm.jsx/payment';
-import Checkout from './components/willRegForm.jsx/payment';
-import ProbateWillForm from './components/willRegForm.jsx/probateReg';
+import Checkout from './components/products/BasicWill/payment';
+import ProbateWillForm from './components/products/probateReg';
 import OrgUserHomePage from './components/orgUserHome';
 import B2BHome from './components/b2bClient/b2bHome';
 import TransactionList from './components/b2bClient/transactionList';
@@ -58,6 +56,8 @@ import EditOrgUser from './components/adminControls/editOrgUser';
 import Transactions from './components/adminControls/b2btransactions';
 import B2bIndividualVoucherList from './components/b2bClient/vouchersList';
 import Sales from './components/adminControls/sales';
+import BalanceRequests from './components/adminControls/balanceReq';
+import WillCreationForm from './components/products/willcreation/willCreationForm';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -101,8 +101,11 @@ class App extends React.Component {
         <Route path="/admin/products-listing" component={ProductsList}/>
         <Route path="/admin/transactions" component={Transactions}/>
         <Route path="/admin/sales" component={Sales}/>
-
+        <Route path="/admin/managebalance" component={BalanceRequests}/>
+        <Route path="/admin/org-user-listing" component={OrgUserListing}/>
         <Route path="/invoice" component={Payment}/>
+
+        <Route path="/product/will-creation" component={WillCreationForm}/>
 
         <Route path="/will-listing" component={RegWillListing}/>
         <Route path="/details" component={Details}/>
@@ -139,7 +142,7 @@ class App extends React.Component {
         <Route path="/test" component={testCom}/>
         <Route path="/orguserhome" render={props => <OrgUserHomePage user={user} {...props}/>}/>
         <Route path="/transactionlist" render={props => <TransactionList user={user} {...props}/>}/>
-        <Route path="/orguserlisting" component={OrgUserListing}/>
+        
         <Route path="/b2bvouchers" component={B2BVouchers}/>
         <Route path="/productsprice" component={ProductsPrice}/>
         <Route path="/editorguser" component={EditOrgUser}/>

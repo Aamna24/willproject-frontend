@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { useParams } from "react-router";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import * as auth from "../../services/authService";
 
@@ -20,7 +19,7 @@ const RegDocument = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await auth.regDocument(
+      await auth.regDocument(
         docName,
         docType,
         docDate,

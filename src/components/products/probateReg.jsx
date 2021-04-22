@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Form from "react-bootstrap/Form";
 import * as auth from "../../services/authService";
@@ -27,7 +27,6 @@ const ProbateWillForm = () => {
   const [commissionBalance, setCommissionBalance] = useState();
   const [amount, setAmount] = useState();
   const [show, setShow] = useState();
-  const loginuser = auth.getCurrentUser();
 
   const config = {
     reference: new Date().getTime(),
@@ -39,28 +38,55 @@ const ProbateWillForm = () => {
 
   const handlePaystackSuccessAction = async (response) => {
     // Implementation for whatever you want to do with email and after success call.
-    console.log(response);
+    //check ambassador code matches or not
+    const filtercode = user.data.filter((x) => x.code === promotionCode);
+    var discountdetail = [];
+
+    if (!filtercode || filtercode.length === 0) {
+      discountdetail[0] = 0;
+    } else {
+      if (filtercode[0].type === "willAmbassador") {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Will Ambassador"
+        );
+      } else {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Organisation User B2B Discount"
+        );
+      }
+    }
     if (response.status === "success") {
       const userID = "";
       const userName = "";
-      const willAmbID = filtercode[0]._id;
-      const productName = product[0].name;
-      const res = await admin.addCommission(
-        userID,
-        willAmbID,
-        commissionEarned,
-        commissionBalance,
-        productName,
-        userName
-      );
-      const discountCode = discountdetail[0].discountCode;
-      const discountApplied = discountdetail[0].discountPercentage;
-      const amountPaid = amount;
-      const id = willRegNo;
-      await auth.probWillUpdate(id, discountApplied, amountPaid);
-      const transactionID = response.reference;
 
-      await admin.addSale(productName, amountPaid, transactionID);
+      const productName = product[0].name;
+      if (discountdetail[0] !== 0) {
+        const willAmbID = filtercode[0]._id;
+        await admin.addCommission(
+          userID,
+          willAmbID,
+          commissionEarned,
+          commissionBalance,
+          productName,
+          userName
+        );
+        //const discountCode = discountdetail[0].discountCode;
+        const discountApplied = discountdetail[0].discountPercentage;
+        const amountPaid = amount;
+        const id = willRegNo;
+        await auth.probWillUpdate(id, discountApplied, amountPaid);
+        const transactionID = response.reference;
+
+        await admin.addSale(productName, amountPaid, transactionID);
+      } else {
+        const discountApplied = 0;
+        const amountPaid = amount;
+        const id = willRegNo;
+        await auth.probWillUpdate(id, discountApplied, amountPaid);
+        const transactionID = response.reference;
+
+        await admin.addSale(productName, amountPaid, transactionID);
+      }
     }
   };
   // you can call this function anything
@@ -104,19 +130,19 @@ const ProbateWillForm = () => {
   };
 
   // get user data
-  const getData = () => {
-    admin
-      .getUsersList()
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return user;
-  };
-  //getData();
-  React.useEffect(getData, []);
+  useEffect(() => {
+    const getData = () => {
+      admin
+        .getUsersList()
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getData();
+  }, []);
 
   // get base price of product
   const getBasePrice = () => {
@@ -128,7 +154,7 @@ const ProbateWillForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return price;
+    //return price;
   };
 
   React.useEffect(getBasePrice, []);
@@ -144,7 +170,7 @@ const ProbateWillForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return discount;
+    //return discount;
   };
   //getData();
   React.useEffect(getDiscount, []);
@@ -154,39 +180,49 @@ const ProbateWillForm = () => {
   if (!price || price.length === 0) return <p></p>;
 
   //base price
-  console.log(price);
+
   const product = price.data.filter((x) => x.name === "Probate Registry Will");
-  console.log(product);
+
   const willPrice = product[0].basePrice;
 
-  //check ambassador code matches or not
-  const filtercode = user.data.filter((x) => x.code === promotionCode);
-  var discountdetail = [];
-  if (filtercode[0].type === "willAmbassador") {
-    discountdetail = discount.data.filter((x) => x.type === "Will Ambassador");
-  } else {
-    discountdetail = discount.data.filter(
-      (x) => x.type === "Organisation User B2B Discount"
-    );
-  }
   const calculateAmount = () => {
     setShow(true);
 
+    //check ambassador code matches or not
+    const filtercode = user.data.filter((x) => x.code === promotionCode);
+    var discountdetail = [];
+    if (!filtercode || filtercode.length === 0) {
+      discountdetail[0] = 0;
+    } else {
+      if (filtercode[0].type === "willAmbassador") {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Will Ambassador"
+        );
+      } else {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Organisation User B2B Discount"
+        );
+      }
+    }
+
     // calculate discounted price after promotion
-    const d = willPrice * (discountdetail[0].discountPercentage / 100);
-    const discountedPrice = willPrice - d;
-    setAmount(discountedPrice);
+    console.log(discountdetail[0]);
+    if (discountdetail[0] !== 0) {
+      const d = willPrice * (discountdetail[0].discountPercentage / 100);
+      const discountedPrice = willPrice - d;
+      setAmount(discountedPrice);
 
-    // calculate comission earned
-    // const com = willPrice * (discountdetail[0].commissionPercentage / 100);
-    const com = discountdetail[0].commissionPercentage;
-    setCommissionEarned(com);
+      // calculate comission earned
+      const com = discountdetail[0].commissionPercentage;
+      setCommissionEarned(com);
 
-    // set commisision balance
-    // const comBal = willPrice - com;
-    const commB = willPrice * (discountdetail[0].commissionPercentage / 100);
-    const comBal = willPrice - commB;
-    setCommissionBalance(comBal);
+      // set commisision balance
+      const commB = willPrice * (discountdetail[0].commissionPercentage / 100);
+      const comBal = willPrice - commB;
+      setCommissionBalance(comBal);
+    } else {
+      setAmount(willPrice);
+    }
   };
   return (
     <div className="container">
@@ -362,10 +398,6 @@ const ProbateWillForm = () => {
       </Form>
       {show && (
         <div>
-          Your actual amount is: {willPrice}
-          <br />
-          Discount applied is: {discountdetail[0].discountPercentage}%
-          <br />
           Total amount: {amount}
           <br />
           <PaystackButton {...componentProps} />

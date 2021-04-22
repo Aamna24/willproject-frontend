@@ -104,7 +104,7 @@ const EditOrgUser = () => {
             type="email"
             class="form-control"
             name="email"
-            value={filter[0].email}
+            defaultValue={filter[0].email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -116,7 +116,7 @@ const EditOrgUser = () => {
             type="password"
             class="form-control"
             name="password"
-            value={filter[0].password}
+            defaultValue={filter[0].password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -129,7 +129,7 @@ const EditOrgUser = () => {
             type="text"
             class="form-control"
             name="text"
-            value={filter[0].town}
+            defaultValue={filter[0].town}
             onChange={(e) => {
               setTown(e.target.value);
             }}
@@ -141,7 +141,7 @@ const EditOrgUser = () => {
             type="text"
             class="form-control"
             name="add1"
-            value={filter[0].add1}
+            defaultValue={filter[0].add1}
             onChange={(e) => {
               setAdd1(e.target.value);
             }}
@@ -153,7 +153,7 @@ const EditOrgUser = () => {
             type="text"
             class="form-control"
             name="add2"
-            value={filter[0].add2}
+            defaultValue={filter[0].add2}
             onChange={(e) => {
               setAdd2(e.target.value);
             }}
@@ -165,7 +165,7 @@ const EditOrgUser = () => {
             type="number"
             class="form-control"
             name="phoneNo"
-            value={filter[0].phoneNo}
+            defaultValue={filter[0].phoneNo}
             onChange={(e) => {
               setPhoneNo(e.target.value);
             }}
@@ -177,7 +177,7 @@ const EditOrgUser = () => {
             type="text"
             class="form-control"
             name="country"
-            value={filter[0].country}
+            defaultValue={filter[0].country}
             onChange={(e) => {
               setCountry(e.target.value);
             }}

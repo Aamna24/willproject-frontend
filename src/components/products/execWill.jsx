@@ -27,7 +27,6 @@ const ExecWillForm = () => {
   const [commissionBalance, setCommissionBalance] = useState();
   const [amount, setAmount] = useState();
   const [show, setShow] = useState();
-  const loginuser = auth.getCurrentUser();
 
   const config = {
     reference: new Date().getTime(),
@@ -40,6 +39,17 @@ const ExecWillForm = () => {
     // Implementation for whatever you want to do with email and after success call.
 
     if (response.status === "success") {
+      const filtercode = user.data.filter((x) => x.code === promotionCode);
+      var discountdetail = [];
+      if (filtercode[0].type === "willAmbassador") {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Will Ambassador"
+        );
+      } else {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Organisation User B2B Discount"
+        );
+      }
       const userID = "";
       const userName = "";
       const willAmbID = filtercode[0]._id;
@@ -48,7 +58,7 @@ const ExecWillForm = () => {
       const transactionID = response.reference;
       const sale = await admin.addSale(productName, amountPaid, transactionID);
       const salesID = sale.data.data.salesID;
-      const res = await admin.addCommission(
+      await admin.addCommission(
         userID,
         willAmbID,
         commissionEarned,
@@ -57,7 +67,7 @@ const ExecWillForm = () => {
         userName,
         salesID
       );
-      const discountCode = discountdetail[0].discountCode;
+      //const discountCode = discountdetail[0].discountCode;
       const discountApplied = discountdetail[0].discountPercentage;
 
       const id = willRegNo;
@@ -114,7 +124,6 @@ const ExecWillForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return user;
   };
   //getData();
   React.useEffect(getData, []);
@@ -129,7 +138,6 @@ const ExecWillForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return price;
   };
 
   React.useEffect(getBasePrice, []);
@@ -145,7 +153,6 @@ const ExecWillForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return discount;
   };
   //getData();
   React.useEffect(getDiscount, []);
@@ -160,17 +167,19 @@ const ExecWillForm = () => {
   );
   const willPrice = product[0].basePrice;
 
-  //check ambassador code matches or not
-  const filtercode = user.data.filter((x) => x.code === promotionCode);
-  var discountdetail = [];
-  if (filtercode[0].type === "willAmbassador") {
-    discountdetail = discount.data.filter((x) => x.type === "Will Ambassador");
-  } else {
-    discountdetail = discount.data.filter(
-      (x) => x.type === "Organisation User B2B Discount"
-    );
-  }
   const calculateAmount = () => {
+    //check ambassador code matches or not
+    const filtercode = user.data.filter((x) => x.code === promotionCode);
+    var discountdetail = [];
+    if (filtercode[0].type === "willAmbassador") {
+      discountdetail = discount.data.filter(
+        (x) => x.type === "Will Ambassador"
+      );
+    } else {
+      discountdetail = discount.data.filter(
+        (x) => x.type === "Organisation User B2B Discount"
+      );
+    }
     setShow(true);
 
     // calculate discounted price after promotion
@@ -365,7 +374,6 @@ const ExecWillForm = () => {
         <div>
           Your actual amount is: {willPrice}
           <br />
-          Discount applied is: {discountdetail[0].discountPercentage}%
           <br />
           Total amount: {amount}
           <br />

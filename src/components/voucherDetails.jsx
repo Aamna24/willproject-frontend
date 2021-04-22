@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as auth from "../services/authService";
 
 const VoucherDetails = () => {
   const querystring = window.location.search;
   const URLParams = new URLSearchParams(querystring);
   const id = URLParams.get("code");
-
+  console.log(id);
   const [details, setDetails] = React.useState([]);
 
-  const getData = () => {
-    auth
-      .getVoucherDetail(id)
-      .then((res) => {
-        setDetails(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  //getData();
-  React.useEffect(getData, []);
+  useEffect(() => {
+    const getData = () => {
+      auth
+        .getVoucherDetail(id)
+        .then((res) => {
+          setDetails(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getData();
+    // eslint-disable-next-line
+  }, []);
+
   if (!details || details.length === 0) return <p>Cannot find any posts</p>;
 
   return (

@@ -100,10 +100,26 @@ export function addSale(product, amount, transactionID){
   return http.post("/users/sales",{product, amount, transactionID})
 }
 
+// get balance requests
+export function getBalanceRequests(){
+  return http.get("/balance/balancerequests")
+}
+
 // get sales
 export function getSales(){
   return http.get("/users/sales")
 }
+
+// clear balance req payment
+export function clearPayment(id){
+  return http.patch("/balance/balance/"+id)
+}
+
+// update balance req status
+export function clearCommissionStatus(id){
+  return http.patch("/balance/commissions/"+id)
+}
+// eslint-disable-next-line
 export default{
     adminlogin,
     getCurrentUser,
@@ -124,7 +140,10 @@ export default{
     getTransactionList,
     updateProfile,
     addSale,
-    getSales
+    getSales,
+    getBalanceRequests,
+    clearCommissionStatus,
+    clearPayment
     
    
 }

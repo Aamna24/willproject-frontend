@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import * as auth from "../../services/adminService";
-import * as author from "../../services/authService";
+import * as auth from "../../../services/adminService";
+import * as author from "../../../services/authService";
 import { PaystackButton } from "react-paystack";
 
 const Checkout = () => {
@@ -34,7 +34,7 @@ const Checkout = () => {
       const userName = loginuser.name;
       const willAmbID = filtercode[0]._id;
       const productName = product[0].name;
-      const res = await auth.addCommission(
+      await auth.addCommission(
         userID,
         willAmbID,
         commissionEarned,
@@ -50,6 +50,7 @@ const Checkout = () => {
         discountCode,
         discountAmount
       );
+      await auth.addSale(product[0].name, amount, response.reference);
     }
   };
 
@@ -66,50 +67,53 @@ const Checkout = () => {
     onClose: handlePaystackCloseAction,
   };
 
-  // get user data
-  const getData = () => {
-    auth
-      .getUsersList()
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return user;
-  };
-  //getData();
-  React.useEffect(getData, []);
+  useEffect(() => {
+    const getData = () => {
+      auth
+        .getUsersList()
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //return user;
+    };
+    getData();
+  }, []);
 
   // get discount
-  const getDiscount = () => {
-    auth
-      .getDiscounts()
-      .then((res) => {
-        setDiscount(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return discount;
-  };
-  //getData();
-  React.useEffect(getDiscount, []);
+  useEffect(() => {
+    function getDiscount() {
+      auth
+        .getDiscounts()
+        .then((res) => {
+          setDiscount(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //return discount;
+    }
+    getDiscount();
+  }, []);
 
   // get base price of product
-  const getBasePrice = () => {
-    author
-      .getProducts()
-      .then((res) => {
-        setPrice(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return price;
-  };
+  useEffect(() => {
+    function getBasePrice() {
+      author
+        .getProducts()
+        .then((res) => {
+          setPrice(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //return price;
+    }
+    getBasePrice();
+  }, []);
 
-  React.useEffect(getBasePrice, []);
   if (!user || user.length === 0) return <p></p>;
   if (!discount || discount.length === 0) return <p></p>;
   if (!price || price.length === 0) return <p></p>;

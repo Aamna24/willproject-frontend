@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import * as auth from "../services/authService";
 class LandingPage extends Component {
   state = {};
   render() {
-    const user = auth.getCurrentUser();
-
     return (
       <div className="container" style={{ marginTop: "100px" }}>
         <div>
@@ -50,6 +47,17 @@ class LandingPage extends Component {
             to="/probateform"
           >
             Probate Registry Will Copy Request Form
+          </Button>
+        </div>
+        <br />
+        <div>
+          <Button
+            color="primary"
+            variant="contained"
+            component={Link}
+            to="/product/will-creation"
+          >
+            Will Creation
           </Button>
         </div>
       </div>

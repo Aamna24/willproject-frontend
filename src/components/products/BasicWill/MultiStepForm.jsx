@@ -4,7 +4,6 @@ import { useForm, useStep } from "react-hooks-helper";
 import ReqDetails from "./requester";
 import WillOwnerDetails from "./willowner";
 import AdditionalInfo from "./AddInfo";
-import Review from "./Review";
 import Checkout from "./payment";
 
 const steps = [

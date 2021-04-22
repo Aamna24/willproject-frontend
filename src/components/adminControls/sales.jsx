@@ -1,6 +1,6 @@
 import React from "react";
 import * as auth from "../../services/adminService";
-import { CButton, CDataTable } from "@coreui/react";
+import { CDataTable } from "@coreui/react";
 
 const Sales = () => {
   const [sales, setSales] = React.useState();

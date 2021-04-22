@@ -18,7 +18,6 @@ const RegWillListing = () => {
       .catch((err) => {
         console.log(err);
       });
-    return willList;
   };
   //getData();
   React.useEffect(getData, []);

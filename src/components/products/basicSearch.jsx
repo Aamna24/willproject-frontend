@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import * as auth from "../services/authService";
-import * as admin from "../services/adminService";
+import * as auth from "../../services/authService";
+import * as admin from "../../services/adminService";
 import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
 
@@ -37,6 +37,7 @@ const SearchForm = () => {
   const [amount, setAmount] = useState();
   const [show, setShow] = useState();
   const [showFields, setShowField] = React.useState(null);
+  const [searchedID, setSearchedID] = React.useState("");
 
   // get base price of product
   const getBasePrice = () => {
@@ -48,7 +49,6 @@ const SearchForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return price;
   };
 
   React.useEffect(getBasePrice, []);
@@ -62,7 +62,6 @@ const SearchForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return discount;
   };
   //getData();
   React.useEffect(getDiscount, []);
@@ -76,7 +75,6 @@ const SearchForm = () => {
       .catch((err) => {
         console.log(err);
       });
-    return user;
   };
   //getData();
   React.useEffect(getData, []);
@@ -121,7 +119,7 @@ const SearchForm = () => {
       const userName = "";
       const willAmbID = filtercode[0]._id;
       const productName = product[0].name;
-      const res = await admin.addCommission(
+      await admin.addCommission(
         userID,
         willAmbID,
         commissionEarned,
@@ -129,11 +127,20 @@ const SearchForm = () => {
         productName,
         userName
       );
-      const discountCode = discountdetail[0].discountCode;
+
       const discountApplied = discountdetail[0].discountPercentage;
       const amountPaid = amount;
-      const id = regNo;
-      //await auth.execWillUpdate(id, discountApplied, amountPaid);
+
+      const paymentStatus = "Paid";
+      await auth.updateSearch(
+        searchedID,
+        response.reference,
+        discountApplied,
+        amountPaid,
+        paymentStatus
+      );
+
+      await admin.addSale(product[0].name, amount, response.reference);
     }
   };
   // you can call this function anything
@@ -170,7 +177,9 @@ const SearchForm = () => {
     data.append("reasons", reasons);
     data.append("promotionCode", promoCode);
     data.append("reqSelfie", selfie);
+    //data.append("discountAmount", discountdetail[0].discountPercentage);
     const res = await auth.searchForm(data);
+    setSearchedID(res.data.data._id);
     if (res.status === 201) {
       toast.success("Will Owner will be notified of Your Search");
     }

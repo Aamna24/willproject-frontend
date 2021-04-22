@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import ItemForm from "./ItemForm";
 
@@ -16,10 +16,8 @@ const Names = ({ setForm, formData, navigation, user }) => {
     requesterTown,
     requesterCountry,
     requesterPostCode,
-    promotionCode,
   } = formData;
   const { next } = navigation;
-  const [selfie, setSelfie] = React.useState();
   return (
     <div>
       <h4 className="text-center mb-4">Requester Details</h4>

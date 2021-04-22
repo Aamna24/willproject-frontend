@@ -29,7 +29,7 @@ const RegOrgUser = () => {
     data.append("country", country);
     data.append("name", name);
     const response = await auth.registerOrgUser(data);
-    if (response.status === 201) {
+    if (response.status === 200) {
       toast.success("User successfully registered");
     }
   };

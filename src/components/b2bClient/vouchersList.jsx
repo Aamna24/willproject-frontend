@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import * as auth from "../../services/authService";
-import { CButton, CDataTable } from "@coreui/react";
+import { CButton, CDataTable, CCardBody, CCollapse } from "@coreui/react";
 import Modal from "react-bootstrap/Modal";
 import Button from "@material-ui/core/Button";
+import { toast } from "react-toastify";
+toast.configure();
 const B2bIndividualVoucherList = ({ user }) => {
-  const [vouchers, setVouchers] = React.useState();
-  const [show, setShow] = React.useState();
-  const [email, setEmail] = React.useState();
+  const [vouchers, setVouchers] = useState();
+  const [show, setShow] = useState();
+  const [email, setEmail] = useState();
+  const [item, setItem] = useState();
+  const [details, setDetails] = useState([]);
+
+  const toggleDetails = (index) => {
+    const position = details.indexOf(index);
+    let newDetails = details.slice();
+    if (position !== -1) {
+      newDetails.splice(position, 1);
+    } else {
+      newDetails = [...details, index];
+    }
+    setDetails(newDetails);
+  };
+
   const getData = () => {
     auth
       .getVouchersList()
@@ -49,11 +65,21 @@ const B2bIndividualVoucherList = ({ user }) => {
     },
   ];
   const handleClose = () => setShow(false);
-  const handleShow = () => {
+  const handleShow = (item) => {
     setShow(true);
+    setItem(item);
   };
 
-  const handleEmail = async () => {};
+  const handleEmail = async () => {
+    const id = item;
+    console.log(id);
+    const res = await auth.emailVoucher(id, email);
+    if (res.status === 200) {
+      toast.success("Email Sent");
+    }
+  };
+
+  const handleDetails = (id) => {};
   return (
     <div className="container">
       <h5 className="mb-5">Showing Individual Vouchers List </h5>
@@ -76,7 +102,7 @@ const B2bIndividualVoucherList = ({ user }) => {
                   variant="outline"
                   shape="square"
                   size="sm"
-                  onClick={() => handleShow(item)}
+                  onClick={() => handleShow(item._id)}
                 >
                   Email
                 </CButton>
@@ -92,14 +118,26 @@ const B2bIndividualVoucherList = ({ user }) => {
                     variant="outline"
                     shape="square"
                     size="sm"
-                    onClick={(e) => {
-                      window.location.href = "/details?d=" + item._id;
+                    onClick={() => {
+                      toggleDetails(index);
                     }}
                   >
-                    Detail
+                    {details.includes(index) ? "Hide" : "View Details"}
                   </CButton>
                 </td>
               </div>
+            );
+          },
+          details: (item, index) => {
+            return (
+              <CCollapse show={details.includes(index)}>
+                <CCardBody>
+                  <h6>Date: {item.date}</h6>
+                  <p>Voucher Code: {item.voucherCode}</p>
+                  <p>Status: {item.status}</p>
+                  <p>Payment: {item.paymentNumber}</p>
+                </CCardBody>
+              </CCollapse>
             );
           },
         }}

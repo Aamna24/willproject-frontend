@@ -1,5 +1,4 @@
 import http from './httpService';
-import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 import jwtDecode from 'jwt-decode'
@@ -118,8 +117,8 @@ export function execWillUpdate(id,discountApplied, amountPaid){
 }
 
 // generate balance req
-export function generateBalanceReq(userName, bankName , bankAccountName, commissionBalance, bankAccNo){
-    return http.post("/users/generate-balancereq/",{userName, bankName , bankAccountName, commissionBalance, bankAccNo})
+export function generateBalanceReq(userID, bankName , bankAccountName, commissionBalance, bankAccNo){
+    return http.post("/balance/generateBalance/",{userID, bankName , bankAccountName, commissionBalance, bankAccNo})
 }
 
 // probate will req
@@ -151,6 +150,22 @@ export function getProducts(){
 export function searchForm(data){
     return http.post("/will/search", data)
 }
+
+// update payment status of searcg
+export function updateSearch(id,paymentNumber, discountAmount, amountPaid, paymentStatus){
+    return http.patch("/will/updatesearch/"+id,{paymentNumber,discountAmount, amountPaid,paymentStatus})
+}
+
+// update payment status in commission listing by on req balance withdrawl
+export function updateCommissionStatus(id,balanceReqID){
+    return http.patch("/users/commissions/"+id,{balanceReqID})
+}
+
+// email to 
+export function emailVoucher(id, email){
+    return http.patch("/users/voucheremail/"+id, {email})
+}
+
 export function getCurrentUser(){
     try {
         const jwt = localStorage.getItem(tokenKey);
@@ -161,6 +176,7 @@ export function getCurrentUser(){
       }
 }
 
+// eslint-disable-next-line
 export default{
     login,
     logout,
@@ -183,6 +199,9 @@ export default{
     probForm,
     probWillUpdate,
     searchForm,
-    generateBalanceReq
+    updateSearch,
+    generateBalanceReq,
+    updateCommissionStatus,
+    emailVoucher
   
 }

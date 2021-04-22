@@ -1,8 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import ItemForm from "./ItemForm";
-import * as auth from "../../services/authService";
-import { toast } from "react-toastify";
+import * as auth from "../../../services/authService";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 const Contact = ({ setForm, formData, navigation, user }) => {
@@ -16,7 +15,7 @@ const Contact = ({ setForm, formData, navigation, user }) => {
     willStorageRefNo,
   } = formData;
 
-  const { previous, next } = navigation;
+  const { previous } = navigation;
   const [requesterSelfie, setSelfie] = React.useState();
 
   const handleSubmit = async () => {

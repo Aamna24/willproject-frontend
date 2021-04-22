@@ -18,9 +18,9 @@ const RegisteredDoc = () => {
       .catch((err) => {
         console.log(err);
       });
-    return regDocs;
   };
   //getData();
+  // eslint-disable-next-line
   React.useEffect(getData, []);
 
   if (!regDocs || regDocs.length === 0) return <p>Cannot find any posts</p>;
@@ -168,7 +168,7 @@ const RegisteredDoc = () => {
                 shape="square"
                 size="sm"
                 onClick={(e) => {
-                  const r = auth.removeRegDoc(item._id);
+                  auth.removeRegDoc(item._id);
                   window.location.reload();
                 }}
               >

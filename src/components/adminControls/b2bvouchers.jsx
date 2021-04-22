@@ -1,7 +1,8 @@
 import React from "react";
 import * as auth from "../../services/authService";
 import { CButton, CDataTable } from "@coreui/react";
-
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 const B2BVouchers = ({ user }) => {
   const [vouchers, setVouchers] = React.useState();
   const getData = () => {
@@ -31,7 +32,15 @@ const B2BVouchers = ({ user }) => {
   ];
   return (
     <div className="container">
-      <h5 className="mb-5">Showing All B2B Vouchers </h5>
+      <Button
+        color="primary"
+        variant="contained"
+        component={Link}
+        to="/admin/create-invoice"
+      >
+        Generate B2B Employee Voucher Invoice
+      </Button>
+      <h5 className="mb-5 mt-5">Showing All B2B Vouchers </h5>
       <CDataTable
         items={arr[1]}
         fields={fields}

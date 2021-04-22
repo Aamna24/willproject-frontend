@@ -1,9 +1,6 @@
 import React from "react";
 import { CButton, CDataTable } from "@coreui/react";
-import * as auth from "../services/authService";
 const Formdata = (props) => {
-  const user = auth.getCurrentUser();
-
   const handleEmail = () => {
     console.log("clicked");
   };
