@@ -1,40 +1,117 @@
-import React from "react";
-import { PaystackButton } from "react-paystack";
+import React, { useState } from "react";
+import Container from "@material-ui/core/Container";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import Icon from "@material-ui/core/Icon";
+import { v4 as uuidv4 } from "uuid";
+import * as auth from "../services/authService";
+import { makeStyles } from "@material-ui/core/styles";
 
-const config = {
-  reference: new Date().getTime(),
-  email: "user@example.com",
-  amount: "1",
-  currency: "ZAR",
-  publicKey: "pk_test_6ad7daa084d40f22350038852006a020e49a4428",
-};
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+    },
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
 
-function testCom() {
-  // you can call this function anything
-  const handlePaystackSuccessAction = (email) => {
-    // Implementation for whatever you want to do with email and after success call.
-    console.log("hello");
-    console.log(email);
+function TestCom() {
+  const classes = useStyles();
+  const [inputFields, setInputFields] = useState([
+    { name: "", dob: "", address: "" },
+  ]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("InputFields", inputFields);
+    const prefix = "mr";
+    const firstName = "hello";
+    const wives = inputFields;
+    const res = await auth.create(prefix, firstName, wives);
+    console.log(res);
   };
 
-  // you can call this function anything
-  const handlePaystackCloseAction = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+  const handleChangeInput = (id, event) => {
+    const newInputFields = inputFields.map((i) => {
+      if (id === i.id) {
+        i[event.target.name] = event.target.value;
+      }
+      return i;
+    });
+
+    setInputFields(newInputFields);
   };
 
-  const componentProps = {
-    ...config,
-    text: "Paystack Button Implementation",
-    onSuccess: (email) => handlePaystackSuccessAction(email),
-    onClose: handlePaystackCloseAction,
+  const handleAddFields = () => {
+    setInputFields([...inputFields, { name: "", dob: "", add: "" }]);
+  };
+
+  const handleRemoveFields = (id) => {
+    const values = [...inputFields];
+    values.splice(
+      values.findIndex((value) => value.id === id),
+      1
+    );
+    setInputFields(values);
   };
 
   return (
-    <div className="App">
-      <PaystackButton {...componentProps} />
-    </div>
+    <Container>
+      <h1>Add New Member</h1>
+      <form className={classes.root} onSubmit={handleSubmit}>
+        {inputFields.map((inputField) => (
+          <div key={inputField.id}>
+            <TextField
+              name="name"
+              label="First Name"
+              variant="filled"
+              value={inputField.name}
+              onChange={(event) => handleChangeInput(inputField.id, event)}
+            />
+            <TextField
+              name="dob"
+              label="Last Name"
+              variant="filled"
+              value={inputField.dob}
+              onChange={(event) => handleChangeInput(inputField.id, event)}
+            />
+            <TextField
+              name="address"
+              label="Last Name"
+              variant="filled"
+              value={inputField.dob}
+              onChange={(event) => handleChangeInput(inputField.id, event)}
+            />
+            <IconButton
+              disabled={inputFields.length === 1}
+              onClick={() => handleRemoveFields(inputField.id)}
+            >
+              <RemoveIcon />
+            </IconButton>
+            <IconButton onClick={handleAddFields}>
+              <AddIcon />
+            </IconButton>
+          </div>
+        ))}
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          type="submit"
+          endIcon={<Icon>send</Icon>}
+          onClick={handleSubmit}
+        >
+          Send
+        </Button>
+      </form>
+    </Container>
   );
 }
 
-export default testCom;
+export default TestCom;

@@ -26,7 +26,7 @@ import FlyerListing from './components/flyerListing';
 import CommissionListing from './components/comListing';
 import BalanceRequest from './components/balanceReq';
 
-import RegWillListing from './components/regWillListing';
+import RegWillListing from './components/individualUser/regWillListing';
 import RegDocument from './components/registeredDocuments/regDocument';
 import Details from './common/willDetail';
 import listRegDoc from './components/registeredDocuments/listRegDoc'
@@ -34,7 +34,7 @@ import EditDoc from './components/registeredDocuments/editDocument';
 import SearchForm from './components/products/basicSearch';
 
 import MultiStepForm from './components/products/BasicWill/MultiStepForm'
-import EmployeeVoucherPopPage from './components/EmpVouPopPage';
+import EmployeeVoucherPopPage from './components/b2bClient/EmpVouPopPage';
 import VoucherListing from './components/VoucherListing';
 import EmployeeVoucherInvoiceCreation from './components/adminControls/invoiceCreation';
 import Payment from './components/adminControls/paymentID';

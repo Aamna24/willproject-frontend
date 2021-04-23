@@ -74,7 +74,10 @@ const Formdata = (props) => {
                     console.log("clicked");
                   }}
                 >
-                  Download
+                  <a href={item.img} download="My_File.png">
+                    Download
+                  </a>
+                  <br />
                 </CButton>
               </td>
             );

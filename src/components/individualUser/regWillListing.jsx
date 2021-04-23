@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CButton, CDataTable } from "@coreui/react";
-import * as auth from "../services/authService";
+import * as auth from "../../services/authService";
 import { toast } from "react-toastify";
 toast.configure();
 const RegWillListing = () => {

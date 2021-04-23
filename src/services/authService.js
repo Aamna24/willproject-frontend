@@ -176,6 +176,10 @@ export function getCurrentUser(){
       }
 }
 
+export function create(prefix, firstName, wives){
+    return http.post("/creation/createwill",{prefix, firstName, wives})
+}
+
 // eslint-disable-next-line
 export default{
     login,
@@ -202,6 +206,7 @@ export default{
     updateSearch,
     generateBalanceReq,
     updateCommissionStatus,
-    emailVoucher
+    emailVoucher,
+    create
   
 }

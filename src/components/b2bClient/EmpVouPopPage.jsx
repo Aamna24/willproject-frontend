@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
-import * as auth from "../services/adminService";
-import * as autherize from "../services/authService";
+import * as auth from "../../services/adminService";
+import * as autherize from "../../services/authService";
 import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
 

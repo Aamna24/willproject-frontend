@@ -352,8 +352,10 @@ const ExecWillForm = () => {
             onChange={(e) => {
               setSelfie(e.target.files[0]);
             }}
+            capture
           />
         </div>
+
         <br />
 
         <Button
