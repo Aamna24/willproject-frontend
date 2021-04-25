@@ -166,6 +166,11 @@ export function emailVoucher(id, email){
     return http.patch("/users/voucheremail/"+id, {email})
 }
 
+// email flyer
+export function emailFlyer(id, email){
+    return http.patch("/flyer/flyeremail/"+id, {email})
+}
+
 export function getCurrentUser(){
     try {
         const jwt = localStorage.getItem(tokenKey);
@@ -207,6 +212,7 @@ export default{
     generateBalanceReq,
     updateCommissionStatus,
     emailVoucher,
-    create
+    create,
+    emailFlyer
   
 }

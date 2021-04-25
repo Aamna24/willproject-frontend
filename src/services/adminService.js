@@ -80,6 +80,10 @@ export function addCommission(userID , willAmbID, commissionEarned, commissionBa
 export function DisableUser(id){
   return http.patch("/users/disable/"+id)
 }
+// activate user
+export function activateUser(id){
+  return http.patch("/users/activate/"+id)
+}
 // update price
 export function updatePrice(product, amount){
   return http.patch("/users/updateproduct",{product,amount})
@@ -143,7 +147,8 @@ export default{
     getSales,
     getBalanceRequests,
     clearCommissionStatus,
-    clearPayment
+    clearPayment,
+    activateUser
     
    
 }

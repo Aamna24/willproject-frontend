@@ -79,7 +79,6 @@ const B2bIndividualVoucherList = ({ user }) => {
     }
   };
 
-  const handleDetails = (id) => {};
   return (
     <div className="container">
       <h5 className="mb-5">Showing Individual Vouchers List </h5>

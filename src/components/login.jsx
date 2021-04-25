@@ -32,6 +32,8 @@ class Login extends Form {
         window.location.href = "/orguserhome";
       } else if (response.data[0].type === "B2B") {
         window.location.href = "/b2bhome";
+      } else if (response.data[0].type === "Admin") {
+        window.location.href = "/adminhome";
       }
 
       toast.success("Successful Login");

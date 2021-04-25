@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { CButton, CDataTable } from "@coreui/react";
+import Modal from "react-bootstrap/Modal";
+import * as auth from "../services/authService";
+import Button from "@material-ui/core/Button";
+import { toast } from "react-toastify";
+toast.configure();
+
 const Formdata = (props) => {
-  const handleEmail = () => {
-    console.log("clicked");
-  };
+  const [show, setShow] = useState();
+  const [email, setEmail] = useState();
+  const [item, setItem] = useState();
   const { posts } = props;
   if (!posts || posts.length === 0) return <p>Cannot find any posts</p>;
   const arr = [];
@@ -33,6 +39,21 @@ const Formdata = (props) => {
     },
   ];
 
+  const handleClose = () => setShow(false);
+  const handleShow = (item) => {
+    setShow(true);
+    setItem(item);
+  };
+
+  const handleEmail = async () => {
+    const id = item;
+    console.log(id);
+    const res = await auth.emailVoucher(id, email);
+    if (res.status === 200) {
+      toast.success("Email Sent");
+    }
+  };
+
   return (
     <div className="container">
       <CDataTable
@@ -55,7 +76,7 @@ const Formdata = (props) => {
                   variant="outline"
                   shape="square"
                   size="sm"
-                  onClick={handleEmail}
+                  onClick={() => handleShow(item._id)}
                 >
                   Email
                 </CButton>
@@ -91,6 +112,42 @@ const Formdata = (props) => {
           },
         }}
       />
+      {show && (
+        <>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Email to</Modal.Title>
+            </Modal.Header>
+            <br />
+            <br />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6">
+                  <label>Enter Email Address</label>
+                </div>
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="email"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <br />
+            </div>
+            <Modal.Footer>
+              <Button variant="contained" color="primary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="contained" color="primary" onClick={handleEmail}>
+                Email
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };

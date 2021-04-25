@@ -150,8 +150,7 @@ class App extends React.Component {
 
 
         <Redirect from="/" exact to="/home" />
-
-        
+   
       </Switch>
     </React.Fragment> );
   }

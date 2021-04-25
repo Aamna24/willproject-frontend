@@ -29,7 +29,7 @@ class AdminMainPage extends Component {
           </Button>
         </div>
         <br />
-        <div className="row">
+        {/* <div className="row">
           <Button
             color="primary"
             variant="contained"
@@ -38,7 +38,7 @@ class AdminMainPage extends Component {
           >
             Manage Will Ambassador Balance Request
           </Button>
-        </div>
+        </div>*/}
         <br />
         <div className="row">
           <Button
@@ -136,7 +136,7 @@ class AdminMainPage extends Component {
             component={Link}
             to="/admin/managebalance"
           >
-            Manage organisation User Balance
+            Manage User Balance
           </Button>
         </div>
       </div>

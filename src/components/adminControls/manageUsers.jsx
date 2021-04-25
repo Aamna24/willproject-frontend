@@ -43,12 +43,26 @@ const ManageUsers = () => {
       sorter: false,
       filter: false,
     },
+    {
+      key: "activate",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
   ];
 
   const handleDisableUser = async (id) => {
     const response = await auth.DisableUser(id);
     if (response.status === 200) {
       toast.success("User is disabled");
+      window.location.reload();
+    }
+  };
+  const handleActivateUser = async (id) => {
+    const response = await auth.activateUser(id);
+    if (response.status === 200) {
+      toast.success("User is re-activated");
       window.location.reload();
     }
   };
@@ -76,6 +90,20 @@ const ManageUsers = () => {
                   onClick={() => handleDisableUser(item._id)}
                 >
                   Deactivate
+                </CButton>
+              </td>
+            );
+          },
+          activate: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  shape="square"
+                  size="sm"
+                  onClick={() => handleActivateUser(item._id)}
+                >
+                  Activate
                 </CButton>
               </td>
             );
