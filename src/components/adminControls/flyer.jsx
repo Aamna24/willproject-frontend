@@ -38,6 +38,13 @@ const Flyer = () => {
       sorter: false,
       filter: false,
     },
+    {
+      key: "edit",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
   ];
 
   const handleRemoveFlyer = (id) => {};
@@ -80,6 +87,23 @@ const Flyer = () => {
                   }}
                 >
                   Remove
+                </CButton>
+              </td>
+            );
+          },
+          edit: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  onClick={() => {
+                    window.location.href = "/admin/edit-flyer/?id=" + item._id;
+                  }}
+                >
+                  Edit
                 </CButton>
               </td>
             );

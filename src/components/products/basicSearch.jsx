@@ -86,16 +86,6 @@ const SearchForm = () => {
   const product = price.data.filter((x) => x.name === "Basic Will Search");
   const willPrice = product[0].basePrice;
 
-  //check ambassador code matches or not
-  const filtercode = user.data.filter((x) => x.code === promoCode);
-  var discountdetail = [];
-  if (filtercode[0].type === "willAmbassador") {
-    discountdetail = discount.data.filter((x) => x.type === "Will Ambassador");
-  } else {
-    discountdetail = discount.data.filter(
-      (x) => x.type === "Organisation User B2B Discount"
-    );
-  }
   const handleChange = (e) => {
     if (e.target.value === "Yes") {
       setShowField(e.target.value);
@@ -113,24 +103,55 @@ const SearchForm = () => {
 
   const handlePaystackSuccessAction = async (response) => {
     // Implementation for whatever you want to do with email and after success call.
+    const filtercode = user.data.filter((x) => x.code === promoCode);
+    var discountdetail = [];
+    if (!filtercode || filtercode.length === 0) {
+      discountdetail[0] = 0;
+    } else {
+      if (filtercode[0].type === "willAmbassador") {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Will Ambassador"
+        );
+      } else {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Organisation User B2B Discount"
+        );
+      }
+    }
 
     if (response.status === "success") {
       const userID = "";
       const userName = "";
-      const willAmbID = filtercode[0]._id;
+
       const productName = product[0].name;
-      await admin.addCommission(
-        userID,
-        willAmbID,
-        commissionEarned,
-        commissionBalance,
-        productName,
-        userName
-      );
+      if (discountdetail[0] !== 0) {
+        const willAmbID = filtercode[0]._id;
+        await admin.addCommission(
+          userID,
+          willAmbID,
+          commissionEarned,
+          commissionBalance,
+          productName,
+          userName
+        );
 
-      const discountApplied = discountdetail[0].discountPercentage;
+        const discountApplied = discountdetail[0].discountPercentage;
+        const amountPaid = amount;
+
+        const paymentStatus = "Paid";
+        await auth.updateSearch(
+          searchedID,
+          response.reference,
+          discountApplied,
+          amountPaid,
+          paymentStatus
+        );
+
+        await admin.addSale(product[0].name, amount, response.reference);
+      }
+    } else {
+      const discountApplied = 0;
       const amountPaid = amount;
-
       const paymentStatus = "Paid";
       await auth.updateSearch(
         searchedID,
@@ -139,7 +160,6 @@ const SearchForm = () => {
         amountPaid,
         paymentStatus
       );
-
       await admin.addSale(product[0].name, amount, response.reference);
     }
   };
@@ -186,23 +206,43 @@ const SearchForm = () => {
   };
 
   const calculateAmount = () => {
+    //check ambassador code matches or not
+    const filtercode = user.data.filter((x) => x.code === promoCode);
+    var discountdetail = [];
+    if (!filtercode || filtercode.length === 0) {
+      discountdetail[0] = 0;
+    } else {
+      if (filtercode[0].type === "willAmbassador") {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Will Ambassador"
+        );
+      } else {
+        discountdetail = discount.data.filter(
+          (x) => x.type === "Organisation User B2B Discount"
+        );
+      }
+    }
     setShow(true);
 
-    // calculate discounted price after promotion
-    const d = willPrice * (discountdetail[0].discountPercentage / 100);
-    const discountedPrice = willPrice - d;
-    setAmount(discountedPrice);
+    if (discountdetail[0] !== 0) {
+      // calculate discounted price after promotion
+      const d = willPrice * (discountdetail[0].discountPercentage / 100);
+      const discountedPrice = willPrice - d;
+      setAmount(discountedPrice);
 
-    // calculate comission earned
-    // const com = willPrice * (discountdetail[0].commissionPercentage / 100);
-    const com = discountdetail[0].commissionPercentage;
-    setCommissionEarned(com);
+      // calculate comission earned
+      // const com = willPrice * (discountdetail[0].commissionPercentage / 100);
+      const com = discountdetail[0].commissionPercentage;
+      setCommissionEarned(com);
 
-    // set commisision balance
-    // const comBal = willPrice - com;
-    const commB = willPrice * (discountdetail[0].commissionPercentage / 100);
-    const comBal = willPrice - commB;
-    setCommissionBalance(comBal);
+      // set commisision balance
+      // const comBal = willPrice - com;
+      const commB = willPrice * (discountdetail[0].commissionPercentage / 100);
+      const comBal = willPrice - commB;
+      setCommissionBalance(comBal);
+    } else {
+      setAmount(willPrice);
+    }
   };
   return (
     <div className="container">
@@ -486,7 +526,6 @@ const SearchForm = () => {
         <div>
           Your actual amount is: {willPrice}
           <br />
-          Discount applied is: {discountdetail[0].discountPercentage}%
           <br />
           Total amount: {amount}
           <br />

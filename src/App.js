@@ -58,6 +58,7 @@ import B2bIndividualVoucherList from './components/b2bClient/vouchersList';
 import Sales from './components/adminControls/sales';
 import BalanceRequests from './components/adminControls/balanceReq';
 import WillCreationForm from './components/products/willcreation/willCreationForm';
+import  EditFlyer  from './components/adminControls/editFlyer'
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -103,6 +104,7 @@ class App extends React.Component {
         <Route path="/admin/sales" component={Sales}/>
         <Route path="/admin/managebalance" component={BalanceRequests}/>
         <Route path="/admin/org-user-listing" component={OrgUserListing}/>
+        <Route path="/admin/edit-flyer/" component={EditFlyer}/>
         <Route path="/invoice" component={Payment}/>
 
         <Route path="/product/will-creation" component={WillCreationForm}/>
@@ -142,7 +144,7 @@ class App extends React.Component {
         <Route path="/test" component={testCom}/>
         <Route path="/orguserhome" render={props => <OrgUserHomePage user={user} {...props}/>}/>
         <Route path="/transactionlist" render={props => <TransactionList user={user} {...props}/>}/>
-        
+       
         <Route path="/b2bvouchers" component={B2BVouchers}/>
         <Route path="/productsprice" component={ProductsPrice}/>
         <Route path="/editorguser" component={EditOrgUser}/>

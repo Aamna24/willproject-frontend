@@ -119,6 +119,18 @@ export function clearPayment(id){
   return http.patch("/balance/balance/"+id)
 }
 
+//edit flyer
+
+export function editFlyer( id,
+  name,
+  type,
+  description){
+  return http.patch("/flyer/editflyer/"+id,{ 
+    name,
+    type,
+    description})
+}
+
 // update balance req status
 export function clearCommissionStatus(id){
   return http.patch("/balance/commissions/"+id)
@@ -148,7 +160,8 @@ export default{
     getBalanceRequests,
     clearCommissionStatus,
     clearPayment,
-    activateUser
+    activateUser,
+    editFlyer
     
    
 }
