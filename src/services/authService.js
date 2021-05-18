@@ -185,6 +185,11 @@ export function create(prefix, firstName, wives){
     return http.post("/creation/createwill",{prefix, firstName, wives})
 }
 
+// find will by reg no
+export function findWill(id){
+    return http.get("/will/find/"+id)
+}
+
 // eslint-disable-next-line
 export default{
     login,
@@ -213,6 +218,7 @@ export default{
     updateCommissionStatus,
     emailVoucher,
     create,
-    emailFlyer
+    emailFlyer,
+    findWill
   
 }

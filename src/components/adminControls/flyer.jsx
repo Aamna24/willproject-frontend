@@ -47,8 +47,6 @@ const Flyer = () => {
     },
   ];
 
-  const handleRemoveFlyer = (id) => {};
-
   return (
     <div className="container">
       <div>

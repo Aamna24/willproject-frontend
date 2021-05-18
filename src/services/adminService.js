@@ -43,6 +43,11 @@ export function getFlyers(){
 export function removeFlyer(id){
   return http.delete("/flyer/delete/"+id)
 }
+
+// remove discount
+export function removeDiscount(id){
+  return http.delete("/users/delete-discount/"+id)
+}
 export function getCurrentUser(){
     try {
         const jwt = localStorage.getItem(tokenKey);
@@ -85,8 +90,8 @@ export function activateUser(id){
   return http.patch("/users/activate/"+id)
 }
 // update price
-export function updatePrice(product, amount){
-  return http.patch("/users/updateproduct",{product,amount})
+export function updatePrice(product, amount, updatedBy){
+  return http.patch("/users/updateproduct",{product,amount, updatedBy})
 }
 
 // generate transaction
@@ -115,8 +120,8 @@ export function getSales(){
 }
 
 // clear balance req payment
-export function clearPayment(id){
-  return http.patch("/balance/balance/"+id)
+export function clearPayment(id, refNo){
+  return http.patch("/balance/balance/"+id, {refNo})
 }
 
 //edit flyer
@@ -161,7 +166,7 @@ export default{
     clearCommissionStatus,
     clearPayment,
     activateUser,
-    editFlyer
-    
+    editFlyer,
+    removeDiscount
    
 }

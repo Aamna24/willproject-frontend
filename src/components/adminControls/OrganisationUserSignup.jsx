@@ -4,7 +4,7 @@ import auth from "../../services/adminService";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
 toast.configure();
-const RegOrgUser = () => {
+const RegOrgUser = ({ history }) => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [selfie, setSelfie] = React.useState();
@@ -31,6 +31,7 @@ const RegOrgUser = () => {
     const response = await auth.registerOrgUser(data);
     if (response.status === 200) {
       toast.success("User successfully registered");
+      history.push("/admin/org-user-listing");
     }
   };
 

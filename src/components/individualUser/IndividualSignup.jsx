@@ -1,8 +1,10 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import auth from "../../services/authService";
 import Form from "react-bootstrap/Form";
-
+import Webcam from "react-webcam";
+import { toast } from "react-toastify";
+toast.configure();
 const IndividualSignup = () => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
@@ -13,6 +15,10 @@ const IndividualSignup = () => {
   const [town, setTown] = React.useState();
   const [country, setCountry] = React.useState();
   const [name, setName] = React.useState();
+  const [camera, setCamera] = React.useState(false);
+  const webcamRef = React.useRef(null);
+  const [load, setLoad] = React.useState(false);
+  const [image, setImage] = React.useState();
 
   const handleSubmit = async () => {
     console.log(selfie);
@@ -27,10 +33,29 @@ const IndividualSignup = () => {
     data.append("town", town);
     data.append("country", country);
     data.append("name", name);
-    const response = await auth.register(data);
-    console.log(response);
+    const res = await auth.register(data);
+    if (res.status === 201) {
+      window.location.href = "/login";
+    } else {
+      toast.error("Error submitting form");
+    }
   };
-
+  const handleCamera = (e) => {
+    e.preventDefault();
+    setCamera(true);
+  };
+  const capture = React.useCallback(
+    async (e) => {
+      e.preventDefault();
+      const imageSrc = webcamRef.current.getScreenshot();
+      const blob = await fetch(imageSrc).then((res) => res.blob());
+      setSelfie(blob);
+      const ur = URL.createObjectURL(blob);
+      setImage(ur);
+      setLoad(true);
+    },
+    [webcamRef]
+  );
   return (
     <div className="container col-md-6">
       <Form>
@@ -67,17 +92,25 @@ const IndividualSignup = () => {
             }}
           />
         </div>
-        <div class="custom-file">
-          <label for="customFile">Selfie</label>
-          <input
-            type="file"
-            name="selfie"
-            onChange={(e) => {
-              setSelfie(e.target.files[0]);
-              console.log(selfie);
-            }}
-          />
-        </div>
+
+        <button onClick={handleCamera}>Take Selfie</button>
+        {camera && (
+          <>
+            <Webcam
+              audio={false}
+              height={200}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              width={500}
+            />
+            <button onClick={capture}>Capture photo</button>
+          </>
+        )}
+        {load && (
+          <>
+            <img src={image} alt="selfie" width="500" height="600" />
+          </>
+        )}
         <div class="form-group">
           <label for="exampleInputEmail1">Town</label>
           <input

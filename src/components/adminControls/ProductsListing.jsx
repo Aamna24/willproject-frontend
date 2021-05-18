@@ -30,7 +30,7 @@ const ProductsList = () => {
   ];
   return (
     <div className="container">
-      <h5 className="mb-5">Showing Products </h5>
+      <h5 className="mb-5">Showing Products Listing </h5>
       <CDataTable
         items={arr[1]}
         fields={fields}

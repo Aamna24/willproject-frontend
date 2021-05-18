@@ -6,7 +6,7 @@ import { CButton, CDataTable } from "@coreui/react";
 
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
-const SetupDiscount = () => {
+const SetupDiscount = ({ history }) => {
   const [type, setType] = React.useState();
   const [fromNoQty, setfromNoQty] = React.useState(null);
   const [toNoQty, settoNoQty] = React.useState(null);
@@ -43,6 +43,20 @@ const SetupDiscount = () => {
     { key: "toNoQty", label: "To No Qty" },
     { key: "discountPercentage", label: "Discount %" },
     { key: "commissionPercentage", label: "Commission %" },
+    {
+      key: "remove",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
+    {
+      key: "edit",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
   ];
 
   const handleSubmit = async () => {
@@ -66,8 +80,6 @@ const SetupDiscount = () => {
       setShowField(null);
       setType(e.target.value);
     }
-
-    console.log("show", showFields);
   };
 
   return (
@@ -191,6 +203,43 @@ const SetupDiscount = () => {
         hover
         sorter
         pagination
+        scopedSlots={{
+          remove: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  onClick={(e) => {
+                    auth.removeDiscount(item._id);
+                    window.location.reload();
+                  }}
+                >
+                  Delete
+                </CButton>
+              </td>
+            );
+          },
+          edit: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  onClick={() => {
+                    history.push("/edit-discount/" + item.discountCode);
+                  }}
+                >
+                  Edit
+                </CButton>
+              </td>
+            );
+          },
+        }}
       />
     </div>
   );

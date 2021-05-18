@@ -8,7 +8,7 @@ const Contact = ({ setForm, formData, navigation, user }) => {
   const {
     storedWillAdd,
     additionalIns,
-    willReminderFr,
+    //willReminderFr,
     willSource,
     createdBy,
     willRefNo,

@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const VoucherListing = () => {
   const [voucher, setVoucher] = React.useState();
-  const [invoice, setInvoice] = React.useState();
   const getData = () => {
     auth
       .getVouchersList()
@@ -17,11 +16,11 @@ const VoucherListing = () => {
       .catch((err) => {
         console.log(err);
       });
-    console.log(voucher);
+
     return voucher;
   };
   //getData();
-  React.useEffect(getData, []);
+  React.useEffect(getData, [voucher]);
 
   const user = admin.getCurrentUser();
   const id = user.id;

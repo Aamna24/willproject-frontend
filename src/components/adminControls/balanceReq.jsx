@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import * as auth from "../../services/adminService";
 import { CButton, CDataTable } from "@coreui/react";
 import { toast } from "react-toastify";
+import { Modal, Button } from "react-bootstrap";
+
 toast.configure();
 
 const BalanceRequests = () => {
-  const [list, setList] = React.useState();
+  const [list, setList] = useState();
+  const [show, setShow] = useState();
+  const [item, setItem] = useState();
+  const [ref, setRefNo] = useState();
   const getData = () => {
     auth
       .getBalanceRequests()
@@ -39,10 +44,15 @@ const BalanceRequests = () => {
       filter: false,
     },
   ];
+  const handleClose = () => setShow(false);
+  const handleShow = (item) => {
+    setShow(true);
+    setItem(item);
+  };
 
-  const handlePayments = async (id) => {
+  const handlePayments = async (id, ref) => {
     await auth.clearCommissionStatus(id);
-    const res = await auth.clearPayment(id);
+    const res = await auth.clearPayment(id, ref);
     if (res.status === 200) {
       toast.success("Payment Cleared");
       window.location.reload();
@@ -72,7 +82,8 @@ const BalanceRequests = () => {
                   shape="square"
                   size="sm"
                   onClick={() => {
-                    handlePayments(item.balanceReqID);
+                    //handlePayments(item.balanceReqID);
+                    handleShow(item.balanceReqID);
                   }}
                 >
                   Clear Payment
@@ -82,6 +93,46 @@ const BalanceRequests = () => {
           },
         }}
       />
+      {show && (
+        <>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Reference Number</Modal.Title>
+            </Modal.Header>
+            <br />
+            <br />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6">
+                  <label>Enter Payment Reference Number</label>
+                </div>
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="email"
+                    onChange={(e) => {
+                      setRefNo(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <br />
+            </div>
+            <Modal.Footer>
+              <Button variant="contained" color="primary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => handlePayments(item, ref)}
+              >
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };

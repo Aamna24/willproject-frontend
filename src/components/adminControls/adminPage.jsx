@@ -12,17 +12,6 @@ class AdminMainPage extends Component {
             color="primary"
             variant="contained"
             component={Link}
-            to="/register/orgaisationalUsers"
-          >
-            Create Organisation Users
-          </Button>
-        </div>
-        <br />
-        <div className="row">
-          <Button
-            color="primary"
-            variant="contained"
-            component={Link}
             to="/admin/flyer"
           >
             Manage PDF Flyer
@@ -68,7 +57,7 @@ class AdminMainPage extends Component {
             color="primary"
             variant="contained"
             component={Link}
-            to="/admin/create-invoice"
+            to="/b2bvouchers"
           >
             Generate B2B Employee Voucher Invoice
           </Button>

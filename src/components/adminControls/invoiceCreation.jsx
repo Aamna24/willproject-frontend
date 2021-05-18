@@ -46,13 +46,12 @@ const EmployeeVoucherInvoiceCreation = () => {
     (x) => x.type === "B2B" && x.status === "Active"
   );
   const filteredProduct = products.data.filter(
-    (x) => x.name === "willcreation"
+    (x) => x.name === "Will Creation"
   );
   const handleSubmit = async () => {
     const user = auth.getCurrentUser();
     var data = new FormData();
     data.append("b2bClient", b2bClient);
-
     data.append("amount", amount);
     const processedBy = user.name;
     const userID = "";
@@ -63,12 +62,12 @@ const EmployeeVoucherInvoiceCreation = () => {
       userID,
       discountID,
       paymentNumber,
-      quantity,
+      noOfVoucher,
       b2bClient,
       processedBy,
       amount
     );
-    console.log(response);
+
     //window.location.href = "/admin/invoice-listing";
   };
   return (

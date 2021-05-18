@@ -65,17 +65,6 @@ const OrgUserHomePage = ({ user }) => {
       </div>
 
       <br />
-      <div className="row">
-        <Button
-          color="primary"
-          variant="contained"
-          component={Link}
-          to="/admin/setup-discount"
-        >
-          Setup Discount
-        </Button>
-      </div>
-      <br />
       <div className="row mb-10">
         <Button
           color="primary"
@@ -88,16 +77,6 @@ const OrgUserHomePage = ({ user }) => {
         </Button>
       </div>
       <br />
-      <div className="row">
-        <Button
-          component={Link}
-          to="/commission-listing"
-          variant="contained"
-          color="primary"
-        >
-          Generate Balance
-        </Button>
-      </div>
     </div>
   );
 };

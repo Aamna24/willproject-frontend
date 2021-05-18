@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { CButton, CDataTable, CCollapse, CCardBody } from "@coreui/react";
+import { Button } from "react-bootstrap";
 import * as auth from "../../services/adminService";
 import { toast } from "react-toastify";
 toast.configure();
 
-const OrgUserListing = () => {
+const OrgUserListing = ({ history }) => {
   const [users, setUsers] = useState([]);
   const [details, setDetails] = useState([]);
   const getData = () => {
@@ -44,14 +45,14 @@ const OrgUserListing = () => {
     {
       key: "view_detail",
       label: "",
-      _style: { width: "10%" },
+      _style: { width: "3%" },
       sorter: false,
       filter: false,
     },
     {
       key: "edit",
       label: "",
-      _style: { width: "10%" },
+      _style: { width: "3%" },
       sorter: false,
       filter: false,
     },
@@ -72,6 +73,14 @@ const OrgUserListing = () => {
   };
   return (
     <div className="container">
+      <Button
+        className="m-3"
+        onClick={() => {
+          history.push("/register/orgaisationalUsers");
+        }}
+      >
+        Add Organisation User
+      </Button>
       <h5 className="mb-5">Showing List Of Organistion Users</h5>
       <CDataTable
         items={filter}
@@ -108,10 +117,11 @@ const OrgUserListing = () => {
             return (
               <CCollapse show={details.includes(index)}>
                 <CCardBody>
-                  <h6>Invoice Date: {item.date}</h6>
+                  <p>Invoice Date:{item.date}</p>
                   <p>Invoice Number: {item.name}</p>
                   <p>B2B Type: {item.type}</p>
                   <p>Status: {item.status}</p>
+                  <p></p>
                 </CCardBody>
               </CCollapse>
             );

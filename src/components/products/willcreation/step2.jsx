@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import ItemForm from "./ItemForm";
 const Step2 = ({ setForm, formData, navigation, user }) => {
-  const {} = formData;
+  //const {} = formData;
   const { previous, next } = navigation;
   return (
     <div>

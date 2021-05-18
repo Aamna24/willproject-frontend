@@ -59,6 +59,7 @@ import Sales from './components/adminControls/sales';
 import BalanceRequests from './components/adminControls/balanceReq';
 import WillCreationForm from './components/products/willcreation/willCreationForm';
 import  EditFlyer  from './components/adminControls/editFlyer'
+import EditDiscount from './components/adminControls/editDiscount';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -105,6 +106,7 @@ class App extends React.Component {
         <Route path="/admin/managebalance" component={BalanceRequests}/>
         <Route path="/admin/org-user-listing" component={OrgUserListing}/>
         <Route path="/admin/edit-flyer/" component={EditFlyer}/>
+        <Route path="/edit-discount/:id" component={EditDiscount}/>
         <Route path="/invoice" component={Payment}/>
 
         <Route path="/product/will-creation" component={WillCreationForm}/>

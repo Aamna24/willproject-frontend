@@ -19,7 +19,7 @@ const Details = () => {
       });
   };
   //getData();
-  React.useEffect(getData, []);
+  React.useEffect(getData, [id]);
 
   if (!details || details.length === 0) return <p>Cannot find any posts</p>;
   console.log(details);

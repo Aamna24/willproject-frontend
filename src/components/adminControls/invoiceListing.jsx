@@ -22,7 +22,7 @@ const InvoiceListing = () => {
   React.useEffect(getData, []);
 
   if (!invoice || invoice.length === 0) return <p>Cannot find any posts</p>;
-
+  console.log(invoice);
   const arr = [];
   //converting post data into array
   const obj = Object.entries(invoice.data);

@@ -5,8 +5,6 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
-import Icon from "@material-ui/core/Icon";
-import { v4 as uuidv4 } from "uuid";
 
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +51,6 @@ const Step2 = ({ setForm, formData, navigation, user }) => {
     setInputFields(values);
   };
 
-  const { prefix } = formData;
   const { next, previous } = navigation;
   return (
     <div>

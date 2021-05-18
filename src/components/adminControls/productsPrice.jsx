@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "@material-ui/core/Button";
 import * as auth from "../../services/adminService";
+import ProductListing from "./ProductsListing";
 import { toast } from "react-toastify";
 toast.configure();
 
@@ -9,12 +10,14 @@ const ProductsPrice = () => {
   const [product, setProduct] = useState();
   const [amount, setAmount] = useState();
 
+  const user = auth.getCurrentUser();
+  const updatedBy = user.name;
+
   const handleSubmit = async () => {
-    const response = await auth.updatePrice(product, amount);
-    console.log(response);
+    const response = await auth.updatePrice(product, amount, updatedBy);
     if (response.status === 200) {
       toast.success("Price updated successfully");
-      window.location.href = "/admin/products-listing";
+      window.location.href = "/productsprice";
     }
   };
 
@@ -66,7 +69,12 @@ const ProductsPrice = () => {
             />
           </div>
         </div>
-        <Button onClick={handleSubmit}>Setup price</Button>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          Update price
+        </Button>
+        <br />
+        <br />
+        <ProductListing />
       </Form>
     </div>
   );

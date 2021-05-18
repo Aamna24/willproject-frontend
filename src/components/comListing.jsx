@@ -88,7 +88,7 @@ const CommissionListing = () => {
         {" "}
         Generate Balance
       </Button>
-      <h5 className="mb-5">Total Balance: {balance}</h5>
+      <h5 className="mb-5">Unpaid Total Balance: {balance}</h5>
 
       <h5 className="mb-5">Showing Balance List</h5>
       <CDataTable
