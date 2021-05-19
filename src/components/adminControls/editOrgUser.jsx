@@ -38,7 +38,6 @@ const EditOrgUser = () => {
   const filter = user.data.filter((userf) => userf._id === profile_id);
 
   const handleUpdate = async () => {
-    const data = new FormData();
     if (name === null) {
       setName(filter[0].name);
     }

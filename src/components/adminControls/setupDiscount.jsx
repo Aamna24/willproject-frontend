@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import { toast } from "react-toastify";
 import * as auth from "../../services/adminService";
+import * as user from "../../services/authService";
 import { CButton, CDataTable } from "@coreui/react";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -25,7 +26,6 @@ const SetupDiscount = ({ history }) => {
       .catch((err) => {
         console.log(err);
       });
-    console.log(discounts);
     return discounts;
   };
   //getData();
@@ -36,11 +36,12 @@ const SetupDiscount = ({ history }) => {
   const obj = Object.entries(discounts);
   obj.forEach(([key, value]) => arr.push(value));
 
-  console.log("arr", arr);
+  const filter1 = arr[1].filter((x) => x.type === "Employee Voucher");
+  const filter2 = arr[1].filter((x) => x.type !== "Employee Voucher");
+
   const fields = [
     { key: "type", label: "Type" },
-    { key: "fromNoQty", label: "From No Qty" },
-    { key: "toNoQty", label: "To No Qty" },
+
     { key: "discountPercentage", label: "Discount %" },
     { key: "commissionPercentage", label: "Commission %" },
     {
@@ -57,16 +58,54 @@ const SetupDiscount = ({ history }) => {
       sorter: false,
       filter: false,
     },
+    {
+      key: "details",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
+  ];
+
+  const fields1 = [
+    { key: "type", label: "Type" },
+    { key: "fromNoQty", label: "From No Qty" },
+    { key: "toNoQty", label: "To No Qty" },
+    { key: "amount", label: "Amount" },
+    {
+      key: "remove",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
+    {
+      key: "edit",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
+    {
+      key: "details",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
   ];
 
   const handleSubmit = async () => {
+    const updatedBy = user.getCurrentUser().name;
+
     const response = await auth.setupDiscount(
       type,
       fromNoQty,
       toNoQty,
       discountPercentage,
       commissionPercentage,
-      amount
+      amount,
+      updatedBy
     );
     if (response.status === 200) {
       toast.success("Discount Setup Successfully");
@@ -89,7 +128,7 @@ const SetupDiscount = ({ history }) => {
         <div className="col-md-6">
           <label>Type</label>
         </div>
-        <div classname="col">
+        <div className="col">
           <select onChange={handleChange}>
             <option>Please Select One</option>
             <option value="Yes">Employee Voucher</option>
@@ -191,10 +230,76 @@ const SetupDiscount = ({ history }) => {
       </div>
 
       <br />
-      <h4>Already Setup Discounts</h4>
+      <h4 className="text-center mb-5">Already Setup Discounts</h4>
+      <h6 className="mb-3">Discount Table 1</h6>
       <CDataTable
-        items={arr[1]}
+        items={filter2}
         fields={fields}
+        columnFilter
+        tableFilter
+        itemsPerPageSelect
+        itemsPerPage={5}
+        hover
+        sorter
+        pagination
+        scopedSlots={{
+          remove: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  onClick={(e) => {
+                    auth.removeDiscount(item._id);
+                    window.location.reload();
+                  }}
+                >
+                  Delete
+                </CButton>
+              </td>
+            );
+          },
+          edit: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  onClick={() => {
+                    history.push("/edit-discount/" + item.discountCode);
+                  }}
+                >
+                  Edit
+                </CButton>
+              </td>
+            );
+          },
+          details: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                >
+                  Details
+                </CButton>
+              </td>
+            );
+          },
+        }}
+      />
+      <h6 className="mb-3" style={{ marginTop: "30px" }}>
+        Discount Table 2
+      </h6>
+      <CDataTable
+        items={filter1}
+        fields={fields1}
         columnFilter
         tableFilter
         footer
@@ -235,6 +340,20 @@ const SetupDiscount = ({ history }) => {
                   }}
                 >
                   Edit
+                </CButton>
+              </td>
+            );
+          },
+          details: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                >
+                  Details
                 </CButton>
               </td>
             );

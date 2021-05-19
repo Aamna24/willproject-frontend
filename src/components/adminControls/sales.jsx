@@ -28,6 +28,7 @@ const Sales = () => {
     { key: "date", label: "date" },
     { key: "productName", label: "Product" },
     { key: "amount", label: "Price" },
+    { key: "transactionID", label: "Tran" },
   ];
   return (
     <div className="container">

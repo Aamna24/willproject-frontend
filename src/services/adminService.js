@@ -20,9 +20,10 @@ export function uploadFlyer(data){
 }
 
 
-export async function setupDiscount(type, fromNoQty, toNoQty, discountPercentage,commissionPercentage,amount){
+export async function setupDiscount(type, fromNoQty, toNoQty, discountPercentage,commissionPercentage,amount,
+  updatedBy){
 
-  return await http.post("/users/setup-discount",{type, fromNoQty, toNoQty, discountPercentage,commissionPercentage,amount});
+  return await http.post("/users/setup-discount",{type, fromNoQty, toNoQty, discountPercentage,commissionPercentage,amount, updatedBy});
 }
 
 // get discounts list
@@ -104,6 +105,13 @@ export function updateProfile(id,name, email, password, town,country,add1,add2,p
   return http.patch("/users/editprofile/"+id,{name, email, password, town,country,add1,add2,phoneNo})
 }
 
+// edit discount
+export function editDiscount(code, type,fromNoQty,toNoQty,discountPercentage,
+  commissionPercentage,amount,discountCode, updatedBy){
+  return http.patch("/users/editdiscount/"+code,{type,fromNoQty,toNoQty,discountPercentage,
+    commissionPercentage,amount,discountCode, updatedBy})
+}
+
 // add sale
 export function addSale(product, amount, transactionID){
   return http.post("/users/sales",{product, amount, transactionID})
@@ -167,6 +175,7 @@ export default{
     clearPayment,
     activateUser,
     editFlyer,
-    removeDiscount
+    removeDiscount,
+    editDiscount
    
 }

@@ -33,7 +33,34 @@ const EditDiscount = ({match}) => {
       if (!discount || discount.length === 0) return <p></p>;
       const filter = discount.data.filter((discounts) => discounts.discountCode === match.params.id);
 
-      
+      const handleUpdate=async()=>{
+        const code = match.params.id
+        if (type === undefined) {
+          setType(filter[0].type);
+        }
+        if (fromNoQty == null) {
+          setfromNoQty(filter[0].fromNoQty);
+        }
+        if (toNoQty === null) {
+          settoNoQty(filter[0].toNoQty);
+        }
+        if (discountPercentage === undefined) {
+          setDisPercentage(filter[0].discountPercentage);
+        }
+        if (commissionPercentage === undefined) {
+          setComPercentage(filter[0].commissionPercentage);
+        }
+        if (amount === null) {
+          setAmount(filter[0].amount);
+        }
+        const discountCode=code
+        const updatedBy=auth.getCurrentUser().name
+         const response = await auth.editDiscount(code,type,fromNoQty,toNoQty,discountPercentage,
+        commissionPercentage,amount,discountCode,updatedBy);
+         if (response.status === 200) {
+           toast.success("Discount Updated");
+         }
+      }
      
       return (
         <Container>
@@ -138,7 +165,7 @@ const EditDiscount = ({match}) => {
       )}
       <br />
              </Form>
-             <Button variant="contained" color="primary">Update Discount</Button>
+             <Button variant="contained" color="primary" onClick={handleUpdate}>Update Discount</Button>
         </Container>
       );
 };
