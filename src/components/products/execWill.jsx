@@ -187,6 +187,7 @@ const ExecWillForm = () => {
   const calculateAmount = () => {
     //check ambassador code matches or not
     const filtercode = user.data.filter((x) => x.code === promotionCode);
+    console.log(filtercode);
     var discountdetail = [];
     if (!filtercode || filtercode.length === 0) {
       discountdetail[0] = 0;

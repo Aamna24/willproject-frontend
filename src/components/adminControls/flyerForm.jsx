@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import auth from "../../services/adminService";
+import * as authuser from "../../services/authService";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
 toast.configure();
@@ -12,12 +13,13 @@ const FlyerForm = () => {
   const [type, setType] = React.useState();
 
   const handleSubmit = async () => {
-    console.log(image);
+    const uploadedBy = authuser.getCurrentUser().name;
     var data = new FormData();
     data.append("img", image);
     data.append("name", name);
     data.append("description", description);
     data.append("type", type);
+    data.append("uploadedBy", uploadedBy);
 
     const response = await auth.uploadFlyer(data);
     //toast.success("Flyer uploaded successfully");

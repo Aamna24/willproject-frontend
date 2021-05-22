@@ -104,41 +104,63 @@ const SearchForm = () => {
 
   const handlePaystackSuccessAction = async (response) => {
     // Implementation for whatever you want to do with email and after success call.
-    const filtercode = user.data.filter((x) => x.code === promoCode);
-    var discountdetail = [];
-    if (!filtercode || filtercode.length === 0) {
-      discountdetail[0] = 0;
-    } else {
-      if (filtercode[0].type === "willAmbassador") {
-        discountdetail = discount.data.filter(
-          (x) => x.type === "Will Ambassador"
-        );
+    try {
+      const filtercode = user.data.filter((x) => x.code === promoCode);
+      var discountdetail = [];
+      if (!filtercode || filtercode.length === 0) {
+        discountdetail[0] = 0;
       } else {
-        discountdetail = discount.data.filter(
-          (x) => x.type === "Organisation User B2B Discount"
-        );
+        if (filtercode[0].type === "willAmbassador") {
+          discountdetail = discount.data.filter(
+            (x) => x.type === "Will Ambassador"
+          );
+        } else {
+          discountdetail = discount.data.filter(
+            (x) => x.type === "Organisation User B2B Discount"
+          );
+        }
       }
-    }
 
-    if (response.status === "success") {
-      const userID = "";
-      const userName = "";
+      if (response.status === "success") {
+        const userID = "";
+        const userName = "";
 
-      const productName = product[0].name;
-      if (discountdetail[0] !== 0) {
-        const willAmbID = filtercode[0]._id;
-        await admin.addCommission(
-          userID,
-          willAmbID,
-          commissionEarned,
-          commissionBalance,
-          productName,
-          userName
-        );
+        const productName = product[0].name;
+        if (discountdetail[0] !== 0) {
+          const willAmbID = filtercode[0]._id;
+          await admin.addCommission(
+            userID,
+            willAmbID,
+            commissionEarned,
+            commissionBalance,
+            productName,
+            userName
+          );
 
-        const discountApplied = discountdetail[0].discountPercentage;
-        const amountPaid = amount;
+          const discountApplied = discountdetail[0].discountPercentage;
+          const amountPaid = Math.ceil(amount);
 
+          const paymentStatus = "Paid";
+          await auth.updateSearch(
+            searchedID,
+            response.reference,
+            discountApplied,
+            amountPaid,
+            paymentStatus
+          );
+
+          await admin.addSale(
+            product[0].name,
+            amount,
+            response.reference,
+            promoCode
+          );
+
+          setResult(true);
+        }
+      } else {
+        const discountApplied = 0;
+        const amountPaid = Math.ceil(amount);
         const paymentStatus = "Paid";
         await auth.updateSearch(
           searchedID,
@@ -147,23 +169,15 @@ const SearchForm = () => {
           amountPaid,
           paymentStatus
         );
-
-        await admin.addSale(product[0].name, amount, response.reference);
-
-        setResult(true);
+        await admin.addSale(
+          product[0].name,
+          amount,
+          response.reference,
+          promoCode
+        );
       }
-    } else {
-      const discountApplied = 0;
-      const amountPaid = amount;
-      const paymentStatus = "Paid";
-      await auth.updateSearch(
-        searchedID,
-        response.reference,
-        discountApplied,
-        amountPaid,
-        paymentStatus
-      );
-      await admin.addSale(product[0].name, amount, response.reference);
+    } catch (error) {
+      console.error(error);
     }
   };
   // you can call this function anything
@@ -200,7 +214,6 @@ const SearchForm = () => {
     data.append("reasons", reasons);
     data.append("promotionCode", promoCode);
     data.append("reqSelfie", selfie);
-    //data.append("discountAmount", discountdetail[0].discountPercentage);
     const res = await auth.searchForm(data);
     setSearchedID(res.data.data._id);
     if (res.status === 201) {
@@ -231,8 +244,7 @@ const SearchForm = () => {
       // calculate discounted price after promotion
       const d = willPrice * (discountdetail[0].discountPercentage / 100);
       const discountedPrice = willPrice - d;
-      setAmount(discountedPrice);
-
+      setAmount(Math.ceil(discountedPrice));
       // calculate comission earned
       // const com = willPrice * (discountdetail[0].commissionPercentage / 100);
       const com = discountdetail[0].commissionPercentage;
@@ -244,7 +256,7 @@ const SearchForm = () => {
       const comBal = willPrice - commB;
       setCommissionBalance(comBal);
     } else {
-      setAmount(willPrice);
+      setAmount(Math.ceil(willPrice));
     }
   };
   return (

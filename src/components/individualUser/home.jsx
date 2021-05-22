@@ -8,7 +8,12 @@ const InHome = () => {
       <h5>Hello User!</h5>
 
       <Grid item xs={12} className="mb-3">
-        <Button color="primary" variant="contained" component={Link} to="">
+        <Button
+          color="primary"
+          variant="contained"
+          component={Link}
+          to="/products/willcreation"
+        >
           Create Will
         </Button>
       </Grid>
@@ -27,11 +32,7 @@ const InHome = () => {
           Create Codicil
         </Button>
       </Grid>
-      <Grid item xs={12} className="mb-3">
-        <Button color="primary" variant="contained" component={Link} to="">
-          Create Will
-        </Button>
-      </Grid>
+
       <Grid item xs={12} className="mb-3">
         <Button color="primary" variant="contained" component={Link} to="">
           Register Will Document

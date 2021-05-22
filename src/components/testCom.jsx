@@ -6,7 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
 import Icon from "@material-ui/core/Icon";
-import * as auth from "../services/authService";
+import { v4 as uuidv4 } from "uuid";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,17 +24,12 @@ const useStyles = makeStyles((theme) => ({
 function TestCom() {
   const classes = useStyles();
   const [inputFields, setInputFields] = useState([
-    { name: "", dob: "", address: "" },
+    { id: uuidv4(), firstName: "", lastName: "" },
   ]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log("InputFields", inputFields);
-    const prefix = "mr";
-    const firstName = "hello";
-    const wives = inputFields;
-    const res = await auth.create(prefix, firstName, wives);
-    console.log(res);
   };
 
   const handleChangeInput = (id, event) => {
@@ -48,7 +44,10 @@ function TestCom() {
   };
 
   const handleAddFields = () => {
-    setInputFields([...inputFields, { name: "", dob: "", add: "" }]);
+    setInputFields([
+      ...inputFields,
+      { id: uuidv4(), firstName: "", lastName: "" },
+    ]);
   };
 
   const handleRemoveFields = (id) => {
@@ -67,24 +66,17 @@ function TestCom() {
         {inputFields.map((inputField) => (
           <div key={inputField.id}>
             <TextField
-              name="name"
+              name="firstName"
               label="First Name"
               variant="filled"
-              value={inputField.name}
+              value={inputField.firstName}
               onChange={(event) => handleChangeInput(inputField.id, event)}
             />
             <TextField
-              name="dob"
+              name="lastName"
               label="Last Name"
               variant="filled"
-              value={inputField.dob}
-              onChange={(event) => handleChangeInput(inputField.id, event)}
-            />
-            <TextField
-              name="address"
-              label="Last Name"
-              variant="filled"
-              value={inputField.dob}
+              value={inputField.lastName}
               onChange={(event) => handleChangeInput(inputField.id, event)}
             />
             <IconButton

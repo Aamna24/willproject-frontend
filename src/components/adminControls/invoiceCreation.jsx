@@ -3,7 +3,8 @@ import * as auth from "../../services/adminService";
 import * as autherize from "../../services/authService";
 import Button from "@material-ui/core/Button";
 import Form from "react-bootstrap/Form";
-
+import { toast } from "react-toastify";
+toast.configure();
 const EmployeeVoucherInvoiceCreation = () => {
   const [users, setUser] = React.useState([]);
   const [b2bClient, setName] = React.useState();
@@ -69,6 +70,9 @@ const EmployeeVoucherInvoiceCreation = () => {
     );
 
     //window.location.href = "/admin/invoice-listing";
+    if (response.status === 200) {
+      toast.success("Successfully created");
+    }
   };
   return (
     <div className="container">

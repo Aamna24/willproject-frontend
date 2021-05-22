@@ -60,6 +60,20 @@ import BalanceRequests from './components/adminControls/balanceReq';
 import WillCreationForm from './components/products/willcreation/willCreationForm';
 import  EditFlyer  from './components/adminControls/editFlyer'
 import EditDiscount from './components/adminControls/editDiscount';
+import PersonalForm from './components/products/willcreation/PersonalDetails';
+import WivesDetails from './components/products/willcreation/WivesDetails';
+import ExecutorDetails from './components/products/willcreation/ExecutorDetails';
+import Children from './components/products/willcreation/Children';
+import GuardianDetails from './components/products/willcreation/GuardianDetails';
+import DistributionDetails from './components/products/willcreation/DistributionDetails';
+import RemainderDetails from './components/products/willcreation/RemainderDetails';
+import OtherDetails from './components/products/willcreation/OthersDetails';
+import PetDetails from './components/products/willcreation/PetDetails';
+import BurialDetails from './components/products/willcreation/BurialDetails';
+import AdditionDetails from './components/products/willcreation/AdditionalDetails';
+import SigningDetails from './components/products/willcreation/SigningDetails';
+import Validation from './components/products/willcreation/Validation';
+import Sucess from './components/products/willcreation/Sucess';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -131,7 +145,24 @@ class App extends React.Component {
         <Route path="/register/indivdualUser" component={Register}/>
         <Route path="/register/B2B" component={RegisterB2B}/>
         <Route path="/individualuser/home" component={InHome}/>
-        
+
+        <Route path="/products/willcreation" component={WillCreationForm}/>
+        <Route path="/willcreation/personal" component={PersonalForm}/>
+        <Route path="/willcreation/wives" component={WivesDetails}/>
+        <Route path="/willcreation/executor" component={ExecutorDetails}/>
+        <Route path="/willcreation/children" component={Children}/>
+        <Route path="/willcreation/guardian" component={GuardianDetails}/>
+        <Route path="/willcreation/distribution" component={DistributionDetails}/>
+        <Route path="/willcreation/remainder-of-estate" component={RemainderDetails}/>
+        <Route path="/willcreation/others" component={OtherDetails}/>
+        <Route path="/willcreation/pet" component={PetDetails}/>
+        <Route path="/willcreation/burial" component={BurialDetails}/>
+        <Route path="/willcreation/additional" component={AdditionDetails}/>
+        <Route path="/willcreation/signing" component={SigningDetails}/>
+        <Route path="/willcreation/validation" component={Validation}/>
+        <Route path="/success" component={Sucess}/>
+
+
        
 
         <Route path="/search" component={SearchForm}/>

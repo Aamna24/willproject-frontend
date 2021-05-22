@@ -55,7 +55,7 @@ class LandingPage extends Component {
             color="primary"
             variant="contained"
             component={Link}
-            // to="/product/will-creation"
+            to="/products/willcreation"
           >
             Will Creation
           </Button>
