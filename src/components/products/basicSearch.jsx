@@ -106,6 +106,7 @@ const SearchForm = () => {
     // Implementation for whatever you want to do with email and after success call.
     try {
       const filtercode = user.data.filter((x) => x.code === promoCode);
+      console.log(filtercode);
       var discountdetail = [];
       if (!filtercode || filtercode.length === 0) {
         discountdetail[0] = 0;
@@ -124,7 +125,6 @@ const SearchForm = () => {
       if (response.status === "success") {
         const userID = "";
         const userName = "";
-
         const productName = product[0].name;
         if (discountdetail[0] !== 0) {
           const willAmbID = filtercode[0]._id;
@@ -153,7 +153,7 @@ const SearchForm = () => {
             product[0].name,
             amount,
             response.reference,
-            promoCode
+            filter[0].code
           );
 
           setResult(true);
@@ -173,7 +173,7 @@ const SearchForm = () => {
           product[0].name,
           amount,
           response.reference,
-          promoCode
+          filter[0].code
         );
       }
     } catch (error) {

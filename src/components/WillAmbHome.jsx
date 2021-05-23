@@ -27,6 +27,17 @@ const WillAHomePage = ({ user }) => {
           Generate Balance
         </Button>
       </div>
+      <br />
+      <div className="row">
+        <Button
+          component={Link}
+          to="/ambassador/sales"
+          variant="contained"
+          color="primary"
+        >
+          View Sales
+        </Button>
+      </div>
     </div>
   );
 };

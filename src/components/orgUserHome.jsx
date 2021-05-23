@@ -77,6 +77,18 @@ const OrgUserHomePage = ({ user }) => {
         </Button>
       </div>
       <br />
+      <br />
+      <div className="row mb-10">
+        <Button
+          color="primary"
+          variant="contained"
+          component={Link}
+          to="/ambassador/sales"
+        >
+          View Sales
+        </Button>
+      </div>
+      <br />
     </div>
   );
 };

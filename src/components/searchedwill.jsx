@@ -15,7 +15,7 @@ const SearchedWill = ({ reg, ph }) => {
     return result;
   };
   //getData();
-  React.useEffect(getData, [result]);
+  React.useEffect(getData, []);
   if (!result || result.length === 0) return <p>hello</p>;
   var filter = [];
   console.log(reg);

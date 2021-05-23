@@ -113,8 +113,8 @@ export function editDiscount(code, type,fromNoQty,toNoQty,discountPercentage,
 }
 
 // add sale
-export function addSale(product, amount, transactionID){
-  return http.post("/users/sales",{product, amount, transactionID})
+export function addSale(product, amount, transactionID, promoCode){
+  return http.post("/users/sales",{product, amount, transactionID,promoCode})
 }
 
 // get balance requests

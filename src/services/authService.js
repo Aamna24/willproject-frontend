@@ -181,8 +181,9 @@ export function getCurrentUser(){
       }
 }
 
-export function create(prefix, firstName, wives){
-    return http.post("/creation/createwill",{prefix, firstName, wives})
+
+export function getCreatedWill(){
+    return http.get("/willcreation")
 }
 
 // find will by reg no
@@ -217,7 +218,7 @@ export default{
     generateBalanceReq,
     updateCommissionStatus,
     emailVoucher,
-    create,
+    getCreatedWill,
     emailFlyer,
     findWill
   

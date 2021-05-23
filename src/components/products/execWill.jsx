@@ -44,7 +44,7 @@ const ExecWillForm = () => {
       if (!filtercode || filtercode.length === 0) {
         discountdetail[0] = 0;
       } else {
-        if (filtercode[0].type === "willAmbassador") {
+        if (filtercode[0].type === "Will Ambassador") {
           discountdetail = discount.data.filter(
             (x) => x.type === "Will Ambassador"
           );
@@ -69,7 +69,8 @@ const ExecWillForm = () => {
         const sale = await admin.addSale(
           productName,
           amountPaid,
-          transactionID
+          transactionID,
+          filtercode[0].code
         );
         const salesID = sale.data.data.salesID;
 
@@ -87,7 +88,12 @@ const ExecWillForm = () => {
         const amountPaid = amount;
         const id = willRegNo;
         await auth.execWillUpdate(id, discountApplied, amountPaid);
-        await admin.addSale(productName, amountPaid, transactionID);
+        await admin.addSale(
+          productName,
+          amountPaid,
+          transactionID,
+          filtercode[0].code
+        );
       }
     }
   };

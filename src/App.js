@@ -74,6 +74,8 @@ import AdditionDetails from './components/products/willcreation/AdditionalDetail
 import SigningDetails from './components/products/willcreation/SigningDetails';
 import Validation from './components/products/willcreation/Validation';
 import Sucess from './components/products/willcreation/Sucess';
+import CreatedWills from './components/individualUser/Will';
+import ViewSales from './components/ViewSales';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -161,6 +163,10 @@ class App extends React.Component {
         <Route path="/willcreation/signing" component={SigningDetails}/>
         <Route path="/willcreation/validation" component={Validation}/>
         <Route path="/success" component={Sucess}/>
+
+        <Route path="/mywill" component={CreatedWills}/>
+
+        <Route path="/ambassador/sales" component={ViewSales}/>
 
 
        

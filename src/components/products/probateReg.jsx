@@ -77,7 +77,12 @@ const ProbateWillForm = () => {
         await auth.probWillUpdate(id, discountApplied, amountPaid);
         const transactionID = response.reference;
 
-        await admin.addSale(productName, amountPaid, transactionID);
+        await admin.addSale(
+          productName,
+          amountPaid,
+          transactionID,
+          filtercode[0].code
+        );
       } else {
         const discountApplied = 0;
         const amountPaid = amount;
@@ -85,7 +90,12 @@ const ProbateWillForm = () => {
         await auth.probWillUpdate(id, discountApplied, amountPaid);
         const transactionID = response.reference;
 
-        await admin.addSale(productName, amountPaid, transactionID);
+        await admin.addSale(
+          productName,
+          amountPaid,
+          transactionID,
+          filtercode[0].code
+        );
       }
     }
   };
