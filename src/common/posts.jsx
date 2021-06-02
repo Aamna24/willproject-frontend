@@ -37,6 +37,7 @@ const Formdata = (props) => {
       sorter: false,
       filter: false,
     },
+    
   ];
 
   const handleClose = () => setShow(false);
@@ -103,6 +104,7 @@ const Formdata = (props) => {
               </td>
             );
           },
+         
           img: (item, index) => {
             return (
               <td className="py-2">
@@ -110,6 +112,8 @@ const Formdata = (props) => {
               </td>
             );
           },
+          
+         
         }}
       />
       {show && (

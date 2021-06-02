@@ -35,7 +35,7 @@ const B2bIndividualVoucherList = ({ user }) => {
     return vouchers;
   };
   //getData();
-  React.useEffect(getData, []);
+  React.useEffect(getData, [vouchers]);
   if (!user || user.length == 0) return <p></p>;
   if (!vouchers || vouchers.length === 0) return <p>No vouchers to show</p>;
   const filtered = vouchers.data.filter(
@@ -96,7 +96,20 @@ const B2bIndividualVoucherList = ({ user }) => {
           email: (item, index) => {
             return (
               <td className="py-2">
-                <CButton
+                {item.status==='Used' && (
+                  <CButton
+                  color="secondary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  disabled
+                  onClick={() => handleShow(item._id)}
+                >
+                  Email
+                </CButton>
+                )}
+                 {item.status==='Not Used' && (
+                  <CButton
                   color="primary"
                   variant="outline"
                   shape="square"
@@ -105,6 +118,7 @@ const B2bIndividualVoucherList = ({ user }) => {
                 >
                   Email
                 </CButton>
+                )}
               </td>
             );
           },
@@ -135,6 +149,8 @@ const B2bIndividualVoucherList = ({ user }) => {
                   <p>Voucher Code: {item.voucherCode}</p>
                   <p>Status: {item.status}</p>
                   <p>Payment: {item.paymentNumber}</p>
+                  <p>Emailed To: {item.emailTo}</p>
+
                 </CCardBody>
               </CCollapse>
             );

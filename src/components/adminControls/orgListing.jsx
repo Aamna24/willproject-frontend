@@ -117,11 +117,17 @@ const OrgUserListing = ({ history }) => {
             return (
               <CCollapse show={details.includes(index)}>
                 <CCardBody>
-                  <p>Invoice Date:{item.date}</p>
-                  <p>Invoice Number: {item.name}</p>
-                  <p>B2B Type: {item.type}</p>
-                  <p>Status: {item.status}</p>
-                  <p></p>
+                  
+                  <p><b>name:</b>{item.name}</p>
+                  <p><b>Email:</b>{item.email}</p>
+                  <p><b>Phone Number:</b>{item.phoneNo}</p>
+                  <p><b>Address 1:</b>{item.add1}</p>
+                  <p><b>Address 2:</b>{item.add2}</p>
+                  <p><b>Town:</b>{item.town}</p>
+                  <p><b>country:</b>{item.country}</p>
+                 
+                  <p><b>Type:</b> {item.type}</p>
+                  <p><b>Status:</b> {item.status}</p>
                 </CCardBody>
               </CCollapse>
             );

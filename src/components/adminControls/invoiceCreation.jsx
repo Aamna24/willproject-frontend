@@ -44,7 +44,7 @@ const EmployeeVoucherInvoiceCreation = () => {
   if (!products || products.length === 0) return <p>Cannot find any posts</p>;
 
   const filtered = users.data.filter(
-    (x) => x.type === "B2B" && x.status === "Active"
+    (x) => x.type === "B2B" && x.status === "Activate"
   );
   const filteredProduct = products.data.filter(
     (x) => x.name === "Will Creation"

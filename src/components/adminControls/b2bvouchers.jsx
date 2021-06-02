@@ -32,14 +32,8 @@ const B2BVouchers = ({ user }) => {
   ];
   return (
     <div className="container">
-      <Button
-        color="primary"
-        variant="contained"
-        component={Link}
-        to="/admin/create-invoice"
-      >
-        Generate B2B Employee Voucher Invoice
-      </Button>
+     <Button component={Link}
+            to="/admin/create-invoice" color="primary" variant="contained">Generate B2B voucher invoice</Button>
       <h5 className="mb-5 mt-5">Showing All B2B Vouchers </h5>
       <CDataTable
         items={arr[1]}

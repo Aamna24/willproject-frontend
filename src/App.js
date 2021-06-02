@@ -76,6 +76,7 @@ import Validation from './components/products/willcreation/Validation';
 import Sucess from './components/products/willcreation/Sucess';
 import CreatedWills from './components/individualUser/Will';
 import ViewSales from './components/ViewSales';
+import AmbBalanceRequests from './components/Org Users/AmbBalReq';
 class App extends React.Component {
   state = {  }
   constructor(props) {
@@ -124,6 +125,7 @@ class App extends React.Component {
         <Route path="/admin/edit-flyer/" component={EditFlyer}/>
         <Route path="/edit-discount/:id" component={EditDiscount}/>
         <Route path="/invoice" component={Payment}/>
+        <Route path="/will/balance-request" component={AmbBalanceRequests}/>
 
         <Route path="/product/will-creation" component={WillCreationForm}/>
 

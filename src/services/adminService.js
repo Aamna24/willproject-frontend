@@ -8,6 +8,7 @@ const tokenKey = "token"
 export async function adminlogin(email, password) {
     const {data: jwt} = await http.post(apiPoint, { email, password })
     localStorage.setItem(tokenKey, jwt.token);
+    localStorage.setItem("name",jwt.data[0].name)
 }
 
 
@@ -128,8 +129,8 @@ export function getSales(){
 }
 
 // clear balance req payment
-export function clearPayment(id, refNo){
-  return http.patch("/balance/balance/"+id, {refNo})
+export function clearPayment(id, refNo, clearedBy){
+  return http.patch("/balance/balance/"+id, {refNo, clearedBy})
 }
 
 //edit flyer

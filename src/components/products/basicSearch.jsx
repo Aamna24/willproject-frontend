@@ -153,7 +153,7 @@ const SearchForm = () => {
             product[0].name,
             amount,
             response.reference,
-            filter[0].code
+            filtercode[0].code
           );
 
           setResult(true);
@@ -173,7 +173,7 @@ const SearchForm = () => {
           product[0].name,
           amount,
           response.reference,
-          filter[0].code
+          filtercode[0].code
         );
       }
     } catch (error) {

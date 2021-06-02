@@ -10,6 +10,9 @@ const tokenKey = "token"
 export async function login(email, password) {
     const {data: jwt} = await http.post(apiPoint, { email, password });
     localStorage.setItem(tokenKey, jwt.token);
+    localStorage.setItem("id",jwt.data[0]._id)
+    localStorage.setItem("name",jwt.data[0].name)
+
     return jwt
 }
 
@@ -49,12 +52,12 @@ export function registerWillAmbassdor(data) {
 export function generateVoucher(userid,
           paymentNumber,
           b2bClient,
-          invoiceID){
+          invoiceID,quantity){
     const voucher = "/users/vouchers"
     return http.post(voucher,{userid,
           paymentNumber,
           b2bClient,
-          invoiceID})
+          invoiceID,quantity})
 }
 
 //get detail of eacg voucher

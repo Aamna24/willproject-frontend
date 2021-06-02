@@ -29,6 +29,13 @@ const TransactionList = ({ user }) => {
     { key: "quantity", label: "Quantity" },
     { key: "paymentNumber", label: "Payment Number" },
     { key: "amount", label: "Amount Paid" },
+    {
+      key: "view",
+      label: "",
+      _style: { width: "30%" },
+      sorter: false,
+      filter: false,
+    },
   ];
   return (
     <div className="container">
@@ -43,6 +50,25 @@ const TransactionList = ({ user }) => {
         hover
         sorter
         pagination
+        scopedSlots={{
+          view: (item, index) => {
+            return (
+              <div>
+                <td className="py-2">
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                   
+                  >
+                    View Invoice PDF
+                  </CButton>
+                </td>
+              </div>
+            );
+          },
+        }}
       />
     </div>
   );
