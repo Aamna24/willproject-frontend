@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import {toast} from 'react-toastify'
 import { Modal, Button , Row, Col} from "react-bootstrap";
 toast.configure()
-const BalanceRequests = () => {
+
+const AmbBalanceRequests = () => {
   const [list, setList] = useState();
   const [show, setShow] = useState();
   const [item, setItem] = useState();
@@ -29,9 +30,8 @@ const BalanceRequests = () => {
   if (!list || list.length === 0)
     return <p>No Balance requests at the moment</p>;
 
-    const arr = [];
-    const obj = Object.entries(list);
-    obj.forEach(([key, value]) => arr.push(value));
+    const filter= list.data.filter(x=>x.userType==="will Ambassador")
+   
 
   const fields = [
     { key: "reqDate", label: "Request Date" },
@@ -84,10 +84,10 @@ const BalanceRequests = () => {
   return (
     <>
     <div className="container">
-    <h5>Showing list of balance requests</h5>
+    <h5>Showing list of Will Ambassadors Balance Requests</h5>
      
       <CDataTable
-        items={arr[1]}
+        items={filter}
         fields={fields}
         columnFilter
         tableFilter
@@ -199,4 +199,4 @@ const BalanceRequests = () => {
   );
 };
 
-export default BalanceRequests;
+export default AmbBalanceRequests;

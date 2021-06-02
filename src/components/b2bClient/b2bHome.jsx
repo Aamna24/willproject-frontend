@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 const B2BHome = () => {
+  const p ="/editorguser?profile="+localStorage.getItem('id')
   return (
     <>
       <div className="row mb-5 ml-5">
@@ -24,7 +25,7 @@ const B2BHome = () => {
           View Transaction List
         </Button>
       </div>
-      <div className="row mb-5 ml-5">
+   { /*  <div className="row mb-5 ml-5">
         <Button
           component={Link}
           to="/b2b/voucherslist"
@@ -32,6 +33,16 @@ const B2BHome = () => {
           color="primary"
         >
           View List of individual vouchers
+        </Button>
+      </div>*/}
+       <div className="row mb-5 ml-5">
+        <Button
+          component={Link}
+          to={p}
+          variant="contained"
+          color="primary"
+        >
+          Update Profile
         </Button>
       </div>
     </>

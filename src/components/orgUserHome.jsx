@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const OrgUserHomePage = ({ user }) => {
   if (!user || user.length === 0) return <p></p>;
+  const p="/editorguser?profile="+localStorage.getItem('id')
   return (
     <div className="container">
       <h6 className="text-right">Promotion Code to be used: {user.code}</h6>
@@ -27,7 +28,7 @@ const OrgUserHomePage = ({ user }) => {
           variant="contained"
           color="primary"
         >
-          View Balance
+          Generate Balance Request
         </Button>
       </div>
       <br />
@@ -47,7 +48,7 @@ const OrgUserHomePage = ({ user }) => {
           color="primary"
           variant="contained"
           component={Link}
-          to="/admin/balance-request"
+          to="/will/balance-request"
         >
           Manage Will Ambassador Balance Request
         </Button>
@@ -78,6 +79,7 @@ const OrgUserHomePage = ({ user }) => {
       </div>
       <br />
       <br />
+      
       <div className="row mb-10">
         <Button
           color="primary"
@@ -86,6 +88,18 @@ const OrgUserHomePage = ({ user }) => {
           to="/ambassador/sales"
         >
           View Sales
+        </Button>
+      </div>
+      <br />
+
+      <div className="row mb-10">
+        <Button
+          color="primary"
+          variant="contained"
+          component={Link}
+          to={p}
+        >
+          Update profile
         </Button>
       </div>
       <br />

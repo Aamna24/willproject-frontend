@@ -17,8 +17,14 @@ const CommissionListing = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = (item) => {
+    if(balance===0){
+      alert('Could not generate Balance as it is 0.')
+      
+    }
+    else{
     setShow(true);
     setCommissionBalance(item);
+    }
   };
   const handleSubmit = async () => {
     const user = await auth.getCurrentUser();

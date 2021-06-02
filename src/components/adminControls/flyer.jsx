@@ -45,6 +45,13 @@ const Flyer = () => {
       sorter: false,
       filter: false,
     },
+    {
+      key: "view",
+      label: "",
+      _style: { width: "10%" },
+      sorter: false,
+      filter: false,
+    },
   ];
 
   return (
@@ -102,6 +109,23 @@ const Flyer = () => {
                   }}
                 >
                   Edit
+                </CButton>
+              </td>
+            );
+          },
+          view: (item, index) => {
+            return (
+              <td className="py-2">
+                <CButton
+                  color="primary"
+                  variant="outline"
+                  shape="square"
+                  size="sm"
+                  onClick={() => {
+                    window.open(item.img)
+                  }}
+                >
+                  View
                 </CButton>
               </td>
             );

@@ -70,7 +70,7 @@ class AdminMainPage extends Component {
             component={Link}
             to="/admin/org-user-listing"
           >
-            Show Organisation User Listing
+            Manage Organisation Users
           </Button>
         </div>
         <br />
@@ -81,7 +81,7 @@ class AdminMainPage extends Component {
             component={Link}
             to="/b2bvouchers"
           >
-            B2B Vouchers
+            Show All B2B Vouchers
           </Button>
         </div>
         <br />
@@ -96,7 +96,7 @@ class AdminMainPage extends Component {
           </Button>
         </div>
         <br />
-        <div className="row">
+       {/* <div className="row">
           <Button
             color="primary"
             variant="contained"
@@ -106,7 +106,7 @@ class AdminMainPage extends Component {
             Show b2b transactions list
           </Button>
         </div>
-        <br />
+      <br />*/}
         <div className="row">
           <Button
             color="primary"

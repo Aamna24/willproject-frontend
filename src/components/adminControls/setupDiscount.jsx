@@ -58,13 +58,7 @@ const SetupDiscount = ({ history }) => {
       sorter: false,
       filter: false,
     },
-    {
-      key: "details",
-      label: "",
-      _style: { width: "10%" },
-      sorter: false,
-      filter: false,
-    },
+   
   ];
 
   const fields1 = [
@@ -86,13 +80,7 @@ const SetupDiscount = ({ history }) => {
       sorter: false,
       filter: false,
     },
-    {
-      key: "details",
-      label: "",
-      _style: { width: "10%" },
-      sorter: false,
-      filter: false,
-    },
+   
   ];
 
   const handleSubmit = async () => {
@@ -278,20 +266,7 @@ const SetupDiscount = ({ history }) => {
               </td>
             );
           },
-          details: (item, index) => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
-                  size="sm"
-                >
-                  Details
-                </CButton>
-              </td>
-            );
-          },
+        
         }}
       />
       <h6 className="mb-3" style={{ marginTop: "30px" }}>
@@ -344,20 +319,7 @@ const SetupDiscount = ({ history }) => {
               </td>
             );
           },
-          details: (item, index) => {
-            return (
-              <td className="py-2">
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  shape="square"
-                  size="sm"
-                >
-                  Details
-                </CButton>
-              </td>
-            );
-          },
+         
         }}
       />
     </div>
