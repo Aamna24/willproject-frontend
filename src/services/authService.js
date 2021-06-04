@@ -12,6 +12,7 @@ export async function login(email, password) {
     localStorage.setItem(tokenKey, jwt.token);
     localStorage.setItem("id",jwt.data[0]._id)
     localStorage.setItem("name",jwt.data[0].name)
+    localStorage.setItem("type",jwt.data[0].type)
 
     return jwt
 }
@@ -49,15 +50,22 @@ export function registerWillAmbassdor(data) {
 }
 
 //generate vouchers
-export function generateVoucher(userid,
-          paymentNumber,
-          b2bClient,
-          invoiceID,quantity){
+export function generateVoucher(userID,
+    discountID,
+    paymentNumber,
+    noOfVoucher,
+    b2bClient,
+    processedBy,
+    amount,
+    invoiceID){
     const voucher = "/users/vouchers"
-    return http.post(voucher,{userid,
-          paymentNumber,
-          b2bClient,
-          invoiceID,quantity})
+    return http.post(voucher,{userID,
+        discountID,
+        paymentNumber,
+        noOfVoucher,
+        b2bClient,
+        processedBy,
+        amount,invoiceID})
 }
 
 //get detail of eacg voucher
@@ -136,6 +144,9 @@ export function probWillUpdate(id,discountApplied, amountPaid){
 
 export function logout(){
     localStorage.removeItem(tokenKey);
+    localStorage.removeItem('name')
+    localStorage.removeItem('id')
+    localStorage.removeItem('type')
 }
 
 // get vouchers list
