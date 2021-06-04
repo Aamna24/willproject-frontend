@@ -12,7 +12,7 @@ const B2BVouchers = ({ user }) => {
         setVouchers(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
       });
     return vouchers;
   };
