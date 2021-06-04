@@ -152,8 +152,8 @@ const EmployeeVoucherInvoiceCreation = () => {
         const discountedPrice = actualPrice - dis
         SetAmount(discountedPrice)
 
-        const commB = discountedPrice * (discountdetail[0].commissionPercentage / 100);
-         const comBal = discountedPrice - commB;
+        const commB = actualPrice * (discountdetail[0].commissionPercentage / 100);
+         const comBal = actualPrice - commB;
         setCommissionBalance(comBal);
 
       }
