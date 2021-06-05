@@ -82,9 +82,8 @@ const EmployeeVoucherInvoiceCreation = () => {
   const filtered = users.data.filter(
     (x) => x.type === "B2B" && x.status === "Activate"
   );
-  const filteredProduct = products.data.filter(
-    (x) => x.name === "Will Creation"
-  );
+  //const filteredProduct = products.data.filter( (x) => x.name === "Will Creation");
+  const filteredProduct = discount.data.filter( (x) => x.type === "Employee Voucher")
 
   const handleSubmit = async () => {
     const user = auth.getCurrentUser();
@@ -139,15 +138,25 @@ const EmployeeVoucherInvoiceCreation = () => {
   const handleCalAmount=()=>{
     
       setShow(true);
+      var price = filteredProduct.filter(x=> x.fromNoQty <= noOfVoucher && x.toNoQty>=noOfVoucher)
+      if(price.length>1){
+        var index = price.length-1
+        price = price[index]
+      }
+      console.log("p",price)
+
       var discountdetail = []
       if(userType==='organisationUser'){
         discountdetail = discount.data.filter(
           (x) => x.type === "Organisation User B2B Discount"
         );
+        console.log("hello")
         const discountApplied = discountdetail[0].discountPercentage;
         const com = discountdetail[0].commissionPercentage;
         setCommissionEarned(com);
-        const actualPrice = noOfVoucher * filteredProduct[0].basePrice;
+       // const actualPrice = noOfVoucher * filteredProduct[0].basePrice;
+       const actualPrice = noOfVoucher * price.amount
+       console.log("a",actualPrice)
         const dis = actualPrice * (discountApplied/100)
         const discountedPrice = actualPrice - dis
         SetAmount(discountedPrice)
@@ -158,7 +167,7 @@ const EmployeeVoucherInvoiceCreation = () => {
 
       }
       else{
-        SetAmount(noOfVoucher * filteredProduct[0].basePrice)
+        SetAmount(noOfVoucher * price.amount)
       }
     
   }
